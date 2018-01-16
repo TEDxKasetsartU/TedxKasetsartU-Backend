@@ -50,49 +50,32 @@ describe("Speakers", () => {
      * Test the /GET route
      */
     describe("/GET speaker", () => {
-        it("it should GET all the speakers", (done) => {
-            chai.request(server.app)
+        it("it should GET all the speakers", () => {
+            return chai.request(server.app)
                 .get("/api/v1/speakers")
                 .then((res) => {
                     expect(res).to.have.status(200);
-                    done();
-                })
-                .catch((err) => {
-                    throw err;
                 });
         });
 
-        it("it should GET indv speaker", (done) => {
+        it("it should GET indv speaker", () => {
             const name = "speaker" + getRandomInt(1, 500000);
-            createSpeaker({
+            return createSpeaker({
                 "name": name
-            })
-                .then(speaker => {
-                    chai.request(server.app)
-                        .get("/api/v1/speaker/" + speaker.id)
-                        .then((res) => {
-                            expect(res).to.have.status(200);
-                            done();
-                        })
-                        .catch((err) => {
-                            throw err;
-                        });
-                })
-                .catch(err => {
-                    throw err;
-                });
+            }).then(speaker => {
+                return chai.request(server.app)
+                    .get("/api/v1/speaker/" + speaker.id)
+                    .then((res) => {
+                        expect(res).to.have.status(200);
+                    });
+            });
         });
 
-        it("GET not exist indv speaker", (done) => {
-            chai.request(server.app)
+        it("GET not exist indv speaker", () => {
+            return chai.request(server.app)
                 .get("/api/v1/speaker/400")
-                .then((res) => {
-                    expect(res).to.have.status(400);
-                    done();
-                })
                 .catch((err) => {
                     expect(err).to.have.status(400);
-                    done();
                 });
         });
     });
@@ -108,16 +91,12 @@ describe("Speakers", () => {
         //     title: "speaker" + getRandomInt(1, 500000)
         // };
 
-        it("create speaker (correctly)", (done) => {
-            chai.request(server.app)
+        it("create speaker (correctly)", () => {
+            return chai.request(server.app)
                 .post("/api/v1/speaker/create")
                 .send(correct_speaker)
                 .then((res) => {
                     expect(res).to.have.status(201);
-                    done();
-                })
-                .catch((err) => {
-                    throw err;
                 });
         });
 
@@ -141,26 +120,21 @@ describe("Speakers", () => {
             name: "new_speaker" + getRandomInt(1, 500000)
         };
 
-        it("update not exist speaker", (done) => {
-            chai.request(server.app)
+        it("update not exist speaker", () => {
+            return chai.request(server.app)
                 .put("/api/v1/speaker/500")
                 .send(new_name)
-                .then((res) => {
-                    expect(res).to.have.status(400);
-                    done();
-                })
                 .catch((err) => {
                     expect(err).to.have.status(400);
-                    done();
                 });
         });
 
-        it("update exist speaker", (done) => {
+        it("update exist speaker", () => {
             const name = "speaker" + getRandomInt(1, 500000);
-            createSpeaker({
+            return createSpeaker({
                 "name": name
             }).then((speaker) => {
-                chai.request(server.app)
+                return chai.request(server.app)
                     .put("/api/v1/speaker/" + speaker.id)
                     .send(new_name)
                     .then((res) => {
@@ -170,47 +144,32 @@ describe("Speakers", () => {
                         expect(res.body.result._id).to.equal(speaker.id);
                         expect(res.body.result).to.have.property("name");
                         expect(res.body.result.name).to.equal(new_name.name);
-                        done();
-                    })
-                    .catch((err) => {
-                        throw err;
                     });
-            })
-                .catch((err) => {
-                    throw err;
-                });
+            }).catch((err) => {
+                throw err;
+            });
         });
     });
 
     describe("/DELETE speaker", () => {
-        it("delete not exist speaker", (done) => {
-            chai.request(server.app)
+        it("delete not exist speaker", () => {
+            return chai.request(server.app)
                 .delete("/api/v1/speaker/500")
-                .then((res) => {
-                    expect(res).to.have.status(400);
-                    done();
-                }).catch((err) => {
+                .catch((err) => {
                     expect(err).to.have.status(400);
-                    done();
                 });
         });
 
-        it("delete speaker", (done) => {
+        it("delete speaker", () => {
             const name = "speaker" + getRandomInt(1, 500000);
-            createSpeaker({
+            return createSpeaker({
                 "name": name
             }).then((speaker) => {
-                chai.request(server.app)
+                return chai.request(server.app)
                     .delete("/api/v1/speaker/" + speaker.id)
                     .then((res) => {
                         expect(res).to.have.status(204);
-                        done();
-                    })
-                    .catch((err) => {
-                        throw err;
                     });
-            }).catch((err) => {
-                throw err;
             });
         });
     });

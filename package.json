@@ -20,7 +20,7 @@
     "lint": "eslint app tests",
     "build:doc": "documentation build app/**/*.js -f html -o docs",
     "build:apidoc": "apidoc -i app -o apidocs",
-    "ci:test": "NODE_ENV=citest nyc npm run test:mocha -- --reporter mocha-junit-reporter",
+    "ci:test": "NODE_ENV=citest nyc npm run test:mocha --verbose -- --reporter mocha-junit-reporter",
     "ci:report": "NODE_ENV=citest nyc report --reporter=lcov > coverage.lcov && codecov",
     "monitor:start": "pm2 start server.js --name rdf-server",
     "monitor:stop": "pm2 stop rdf-server",
