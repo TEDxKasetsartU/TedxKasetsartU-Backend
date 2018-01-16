@@ -2,7 +2,14 @@
 
 ## Badge
 
-
+| Badge | Description |
+| ----- | ----------- |
+| [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://libraries.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | monitoring dependencies, by **libraries.io** |
+| [![Codecov](https://img.shields.io/codecov/c/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codecov.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | code coverage, use **codecov** |
+| [![CircleCI](https://img.shields.io/circleci/project/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://circleci.com/gh/TEDxKasetsartU/TedxKasetsartU-Backend) | testing CI, use **CircleCI** |
+| [![Code Climate](https://img.shields.io/codeclimate/maintainability/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codeclimate.com/github/TEDxKasetsartU/TedxKasetsartU-Backend) | analysis code and maintainability, use **code climates** |
+| [![Code Climate](https://img.shields.io/codeclimate/issues/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codeclimate.com/github/TEDxKasetsartU/TedxKasetsartU-Backend/issues) | code issues or problem, use **code climates** |
+| [![Heroku](https://img.shields.io/badge/Heroku-Updated-brightgreen.svg)](https://temp-backend-node.herokuapp.com) | staging server |
 
 ## Available command
 
