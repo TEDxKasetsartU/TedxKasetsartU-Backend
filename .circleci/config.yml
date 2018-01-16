@@ -29,3 +29,6 @@ jobs:
           command: 'npm run ci:report'
       - store_test_results:
           path: test/results
+      - store_artifacts:
+          path: /home/circleci/.npm/_logs/
+          destination: npm/logs
