@@ -5,3 +5,6 @@ plugins:
     enabled: true
   nodesecurity:
     enabled: true
+exclude_patterns:
+  - "apidocs/**/*"
+  - "docs/**/*"
