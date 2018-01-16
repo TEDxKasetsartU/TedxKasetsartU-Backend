@@ -76,13 +76,15 @@ I use [keymetrics](https://app.keymetrics.io/#/)
 
 ### Production
 
-| Available command    | Description                        |
-| -------------------- | ---------------------------------- |
-| `npm` run start:prod | start server with *production* env |
+| Available command    | Description                                    |
+| -------------------- | ---------------------------------------------- |
+| `npm` run start:prod | start server with *production* env             |
+| `npm` run build:gh   | build document and deploy to `gh-pages` branch |
 
 ### Document
 
-| Available command      | Description                            |
-| ---------------------- | -------------------------------------- |
-| `npm` run build:doc    | build code document to `docs` folder   |
-| `npm` run build:apidoc | build api document to `apidocs` folder |
+| Available command       | Description                            |
+| ----------------------- | -------------------------------------- |
+| `npm` run build:doc     | build code document to `docs` folder   |
+| `npm` run build:apidoc  | build api document to `apidocs` folder |
+| `npm` run build:doc:all | build both api and code docs           |
