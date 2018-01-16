@@ -1,6 +1,8 @@
 version: 2
 jobs:
   build:
+    branches:
+      ignore: gh-pages
     docker:
       - image: 'circleci/node:9.3.0'
       - image: 'circleci/mongo:3.6.2'
