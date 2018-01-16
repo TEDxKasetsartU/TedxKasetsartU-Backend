@@ -1,0 +1,99 @@
+/**
+ * create mongo schema and model, 
+ * More {@link http://mongoosejs.com/docs/guide.html#options|mongoosejs}
+ * @class
+ * @param {string} database_name database name
+ * @param {object} database_columns column inside database
+ * @param {object} database_options option of Schema creator 
+ */
+class DefaultModel {
+    /**
+     * mongoose instance
+     * @static
+     *  @returns {object} mongooes
+     */
+    get mongoose() {
+        return require("mongoose");
+    }
+
+    /**
+     * default limit of list model
+     * @static
+     * @returns {number} 15
+     */
+    get DEFAULT_LIMIT() {
+        return 15;
+    }
+
+    /**
+     * @constructor
+     */
+    constructor(database_name, database_columns, database_options) {
+        this.Schema = new this.mongoose.Schema(database_columns, database_options);
+        this.model = this.mongoose.model(database_name, this.schema);
+    }
+
+    /**
+     * create new model
+     * @param {object} parameters model columns
+     * @returns {Promise<Model>} promise of mongo model
+     */
+    create(parameters) {
+        const m = new this.model(parameters);
+        return new Promise((res, rej) => {
+            m.save((err, m) => {
+                if (err) return rej(err);
+                res(m);
+            });
+        });
+    }
+
+    /**
+     * list row in database, by limitation and next
+     * @param {number} next next element, More {@link https://docs.mongodb.com/manual/reference/method/cursor.skip/#cursor.skip|mongodb-skip}
+     * @returns {Promise<Array<Model>>} promise of list of mongo model
+     */
+    list(next) {
+        return this.model.find({}, null, {
+            "limit": this.DEFAULT_LIMIT,
+            "skip": next * this.DEFAULT_LIMIT
+        }).exec();
+    }
+
+    /**
+     * get one model specify by _id
+     * @param {string} id model id
+     * @returns {Promise<Model>} promise of mongo model
+     */
+    retrieve(id) {
+        return this.model.findById(id)
+            .exec();
+    }
+
+    /**
+     * update model that have id same as input id
+     * @param {string} id input id
+     * @param {object} body update column 
+     * @returns {Promise<Model>} promise of new mongo model
+     */
+    update(id, body) {
+        body["$inc"] = {
+            "__v": 1
+        };
+        return this.model.findByIdAndUpdate(id, body, {
+            "new": true
+        }).exec();
+    }
+
+    /**
+     * delete one model specify by _id
+     * @param {string} id model id
+     * @returns {Promise<Null>} promise of empty
+     */
+    destroyer(id) {
+        return this.model.findByIdAndRemove(id)
+            .exec();
+    }
+}
+
+module.exports = DefaultModel;
