@@ -10,6 +10,7 @@
 | [![Code Climate](https://img.shields.io/codeclimate/maintainability/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codeclimate.com/github/TEDxKasetsartU/TedxKasetsartU-Backend) | analysis code and maintainability, use **code climates** |
 | [![Code Climate](https://img.shields.io/codeclimate/issues/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codeclimate.com/github/TEDxKasetsartU/TedxKasetsartU-Backend/issues) | code issues or problem, use **code climates** |
 | [![Heroku](https://img.shields.io/badge/Heroku-Updated-brightgreen.svg)](https://tedxku-backend.herokuapp.com) | staging server |
+| [![Doc](https://img.shields.io/badge/Document-Updated-orange.svg)](https://tedxkasetsartu.github.io/TedxKasetsartU-Backend/) | document site |
 
 ## Available command
 
