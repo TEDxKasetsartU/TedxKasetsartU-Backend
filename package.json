@@ -23,6 +23,7 @@
     "build:doc:all": "npm run build:doc && npm run build:apidoc",
     "ci:test": "NODE_ENV=citest nyc npm run test:mocha --verbose -- --reporter mocha-junit-reporter",
     "ci:report": "NODE_ENV=citest nyc report --reporter=lcov > coverage.lcov && codecov",
+    "build:gh": "npm run build:doc:all && git subtree split --prefix documents -b gh-pages && git push -f origin gh-pages:gh-pages && git branch -D gh-pages",
     "monitor:start": "pm2 start server.js --name rdf-server",
     "monitor:stop": "pm2 stop rdf-server",
     "monitor:show": "pm2 show rdf-server",

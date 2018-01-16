@@ -118,4 +118,8 @@ app/db
 ### Test ###
 test-results.xml
 
+### Document ###
+documents
+!documents/index.html
+
 # End of https://www.gitignore.io/api/visualstudiocode,vim,node,osx
