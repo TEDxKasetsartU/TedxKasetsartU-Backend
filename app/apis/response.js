@@ -1,11 +1,12 @@
 const serializeError = require("serialize-error");
+const errors = require("restify-error");
 
 const get_res = (complete, msg) => {
     let json = {
         "complete": complete
     };
 
-    if (msg instanceof Error)
+    if (msg instanceof Error && !(msg instanceof errors.HttpError))
         msg = serializeError(msg);
 
     if (!complete) {
@@ -14,6 +15,16 @@ const get_res = (complete, msg) => {
         if (msg) json["result"] = msg;
     }
     return json;
+};
+
+const httpErrorMid = (res, msg) => {
+    if (msg instanceof errors.HttpError) {
+        res.status(msg.statusCode);
+        res.send(get_res(false, msg.body));
+        return true;
+    } else {
+        return false;
+    }
 };
 
 const set = (res, code, obj) => {
@@ -35,15 +46,18 @@ const set_204 = (res) => {
 };
 
 const set_404_custom = (res, msg) => {
-    return set(res, 404, msg);
+    if (!httpErrorMid(res, msg))
+        return set(res, 404, msg);
 };
 
 const set_404 = (res, obj) => {
-    return set_404_custom(res, obj + " Not Found");
+    if (!httpErrorMid(res, obj))
+        return set_404_custom(res, obj + " Not Found");
 };
 
 const set_400 = (res, msg) => {
-    return set(res, 400, msg);
+    if (!httpErrorMid(res, msg))
+        return set(res, 400, msg);
 };
 
 module.exports = {

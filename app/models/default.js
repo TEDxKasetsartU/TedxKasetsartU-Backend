@@ -1,3 +1,5 @@
+const errors = require("restify-error");
+
 /**
  * create mongo schema and model, 
  * More {@link http://mongoosejs.com/docs/guide.html#options|mongoosejs}
@@ -80,8 +82,15 @@ class DefaultModel {
      * @returns {Promise<Model>} promise of mongo model
      */
     retrieve(id) {
-        return this.model.findById(id)
-            .exec();
+        return new Promise((res, rej) => {
+            return this.model.findById(id)
+                .exec().then((result) => {
+                    if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
+                    res(result);
+                }).catch((err) => {
+                    rej(err);
+                });
+        });
     }
 
     /**
@@ -94,9 +103,16 @@ class DefaultModel {
         body["$inc"] = {
             "__v": 1
         };
-        return this.model.findByIdAndUpdate(id, body, {
-            "new": true
-        }).exec();
+        return new Promise((res, rej) => {
+            return this.model.findByIdAndUpdate(id, body, {
+                "new": true
+            }).exec().then((result) => {
+                if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
+                res(result);
+            }).catch((err) => {
+                rej(err);
+            });
+        });
     }
 
     /**
@@ -104,9 +120,16 @@ class DefaultModel {
      * @param {string} id model id
      * @returns {Promise<Null>} promise of empty
      */
-    destroyer(id) {
-        return this.model.findByIdAndRemove(id)
-            .exec();
+    delete(id) {
+        return new Promise((res, rej) => {
+            return this.model.findByIdAndRemove(id)
+                .exec().then((result) => {
+                    if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
+                    res(result);
+                }).catch((err) => {
+                    rej(err);
+                });
+        });
     }
 
     /**

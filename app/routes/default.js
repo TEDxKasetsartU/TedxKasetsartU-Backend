@@ -38,7 +38,10 @@ class DefaultRoute {
 
     exec() {
         this.get_list();
+        this.get_retrieve();
         this.post_create();
+        this.put_update();
+        this.delete_destroy();
         this.default_get();
     }
 
@@ -52,9 +55,27 @@ class DefaultRoute {
         });
     }
 
+    get_retrieve(id = "fid") {
+        this.express.get(this.get_custom_path(this.name, ":" + id), (req, res) => {
+            return this.controller.get(req, res, id);
+        });
+    }
+
     post_create(custom = "") {
         this.express.post(this.get_custom_path(this.name, custom), (req, res) => {
             return this.controller.create(req, res);
+        });
+    }
+
+    put_update(id = "fid") {
+        this.express.put(this.get_custom_path(this.name, ":" + id), (req, res) => {
+            return this.controller.update(req, res, id);
+        });
+    }
+
+    delete_destroy(id = "fid") {
+        this.express.delete(this.get_custom_path(this.name, ":" + id), (req, res) => {
+            return this.controller.delete(req, res, id);
         });
     }
 }
