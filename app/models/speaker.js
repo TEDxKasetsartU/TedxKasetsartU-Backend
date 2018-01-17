@@ -1,8 +1,6 @@
-const mongoose = require("mongoose");
+const DefaultModel = require("./default");
 
-const DEFAULT_LIMIT = 15;
-
-const SpeakerSchema = new mongoose.Schema({
+const SpeakModel = new DefaultModel("Speaker", {
     name: {
         type: String
     },
@@ -25,50 +23,4 @@ const SpeakerSchema = new mongoose.Schema({
     }
 });
 
-const Speaker = mongoose.model("Speaker", SpeakerSchema);
-
-/** Helper function */
-const SpeakerCreator = (parameters) => {
-    const speaker = new Speaker(parameters);
-    return new Promise((res, rej) => {
-        speaker.save((err, speaker) => {
-            if (err) return rej(err);
-            res(speaker);
-        });
-    });
-};
-
-const SpeakerList = (next) => {
-    return Speaker.find({}, null, {
-        "limit": DEFAULT_LIMIT,
-        "skip": next * DEFAULT_LIMIT
-    }).exec();
-};
-
-const SpeakerRetrieve = (id) => {
-    return Speaker.findById(id)
-        .exec();
-};
-
-const SpeakerUpdate = (id, body) => {
-    body["$inc"] = {
-        "__v": 1
-    };
-    return Speaker.findByIdAndUpdate(id, body, {
-        "new": true
-    }).exec();
-};
-
-const SpeakerDestroyer = (id) => {
-    return Speaker.findByIdAndRemove(id)
-        .exec();
-};
-
-module.exports = {
-    "Speaker": Speaker,
-    "SpeakerCreator": SpeakerCreator,
-    "SpeakerList": SpeakerList,
-    "SpeakerRetrieve": SpeakerRetrieve,
-    "SpeakerUpdate": SpeakerUpdate,
-    "SpeakerDestroyer": SpeakerDestroyer
-};
+module.exports = SpeakModel;

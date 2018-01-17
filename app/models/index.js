@@ -1,7 +1,6 @@
 const mongoose = require("mongoose");
 const fs = require("fs");
 const path = require("path");
-const basename = path.basename(module.filename);
 
 const Schema = mongoose.Schema;
 
@@ -26,10 +25,11 @@ mongoose.Promise = require("bluebird"); // promise library
 fs.readdirSync(__dirname)
     .filter(file =>
         (file.indexOf(".") !== 0) &&
-        (file !== basename) &&
         (file.slice(-3) === ".js"))
     .forEach(file => {
-        db[file.split(".")[0]] = require(path.join(__dirname, file));
+        if (file != "default.js" && file != "index.js") {
+            db[file.split(".")[0]] = require(path.join(__dirname, file));
+        }
     });
 
 db.mongoose = mongoose;

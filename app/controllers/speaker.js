@@ -1,5 +1,11 @@
 const SpeakerModel = require("../models").speaker;
+// const DefaultController = require("./default");
 const respAPIs = require("../apis/response");
+
+
+// console.log(new DefaultController(null, {
+//     "apis": ["create", "list"]
+// }));
 
 module.exports = {
     create(req, res) {

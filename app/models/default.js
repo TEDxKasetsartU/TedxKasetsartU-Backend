@@ -26,10 +26,24 @@ class DefaultModel {
     }
 
     /**
+     * get model name
+     * @static 
+     * @returns {string} database name
+     */
+    get name() {
+        return this.n;
+    }
+
+    set name(name) {
+        this.n = name;
+    }
+
+    /**
      * @constructor
      */
     constructor(database_name, database_columns, database_options) {
-        this.Schema = new this.mongoose.Schema(database_columns, database_options);
+        this.name = database_name;
+        this.schema = new this.mongoose.Schema(database_columns, database_options);
         this.model = this.mongoose.model(database_name, this.schema);
     }
 
@@ -93,6 +107,15 @@ class DefaultModel {
     destroyer(id) {
         return this.model.findByIdAndRemove(id)
             .exec();
+    }
+
+    /**
+     * count element model by [condition]
+     * @param {object} condition filter model and counting {@link http://mongoosejs.com/docs/api.html#model_Model.count|Model.count}
+     * @returns {Promise<Null>} promise of count number
+     */
+    count(condition = {}) {
+        return this.model.count(condition).exec();
     }
 }
 

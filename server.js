@@ -35,11 +35,12 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Require our routes into the application.
-require("./app/routes")(app);
+const Speaker = require("./app/models").speaker;
 
-app.get("*", (req, res) => {
-    return require("./app/apis/response").set_404_custom(res, "Empty page, learn more on document");
-});
+const DefRoute = require("./app/routes/default");
+
+const default_route = new DefRoute(app, Speaker);
+default_route.exec();
 
 const server = app.listen(port, () => {
     console.log("RESTful API server started on: " + port);

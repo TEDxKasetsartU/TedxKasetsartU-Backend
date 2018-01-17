@@ -26,6 +26,10 @@ const set_200 = (res, obj) => {
     return set(res, 200, obj);
 };
 
+const set_201 = (res, obj) => {
+    return set(res, 201, obj);
+};
+
 const set_204 = (res) => {
     return set(res, 204);
 };
@@ -44,6 +48,7 @@ const set_400 = (res, msg) => {
 
 module.exports = {
     "set_200": set_200,
+    "set_201": set_201,
     "set_204": set_204,
     "set_404": set_404,
     "set_404_custom": set_404_custom,

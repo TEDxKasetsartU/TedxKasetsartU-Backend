@@ -1,10 +1,61 @@
 class DefaultRoute {
+    constructor(expressApp, model, parameter = {}) {
+        const DefController = require("../controllers/default");
+        // if (!parameter.controller_options) parameter.controller_options = {};
 
-    constructor(default_path = "/api", version = "v1", defaultController, expressApp) {
-        this.path = default_path + "/" + version;
-        this.controller = defaultController;
+        let defaultParameter = {
+            "default_path": "/api",
+            "version": "v1",
+            "controller": new DefController(model, parameter.controller_options),
+            "controller_options": {},
+            "name": model.name.toLowerCase(),
+            "pl_name": model.name.toLowerCase() + "s",
+        };
+
+        if (parameter.default_path) defaultParameter.default_path = parameter.default_path;
+        if (parameter.version) defaultParameter.version = parameter.version;
+        if (parameter.controller) defaultParameter.controller = new parameter.controller(model, parameter.controller_options);
+        if (parameter.name) defaultParameter.name = parameter.name;
+        if (parameter.pl_name) defaultParameter.pl_name = parameter.pl_name;
 
         this.express = expressApp;
+        this.path = this.get_path(defaultParameter.default_path, defaultParameter.version);
+        this.controller = defaultParameter.controller;
+        this.name = defaultParameter.name;
+        this.pl_name = defaultParameter.pl_name;
+    }
+
+    get_path(prefix, version) {
+        // add / before prefix if not exist
+        if (prefix != "" && prefix.charAt(0) != "/") prefix = "/" + prefix;
+        return prefix + "/" + version + "/";
+    }
+
+    get_custom_path(name, custom = "") {
+        if (custom && custom != "") custom = "/" + custom;
+        return this.path + name + custom;
+    }
+
+    exec() {
+        this.get_list();
+        this.post_create();
+        this.default_get();
+    }
+
+    default_get() {
+        this.express.get("*", this.controller.defaultResponse);
+    }
+
+    get_list(custom = "") {
+        this.express.get(this.get_custom_path(this.pl_name, custom), (req, res) => {
+            return this.controller.list(req, res);
+        });
+    }
+
+    post_create(custom = "") {
+        this.express.post(this.get_custom_path(this.name, custom), (req, res) => {
+            return this.controller.create(req, res);
+        });
     }
 }
 
