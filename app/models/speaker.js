@@ -2,13 +2,14 @@ const DefaultModel = require("./default");
 
 const SpeakModel = new DefaultModel("Speaker", {
     name: {
-        type: String
+        type: String,
+        required: [true, "Speaker require name"]
     },
     speaker_info: {
         type: String
     },
     topic: {
-        type: String
+        type: String,
     },
     description: {
         type: String

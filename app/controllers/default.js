@@ -6,6 +6,13 @@ class DefaultController {
         return this.model.name;
     }
 
+    /**
+     * @constructor
+     * @param {*} model 
+     * @param {object} options option of controller
+     * @param {object} options.apis api option
+     * @param {string[]} options.apis.ignore ignore method, accept "create", "get", "list", "update", "delete"
+     */
     constructor(model, options) {
         this.apis = {
             "create": true,

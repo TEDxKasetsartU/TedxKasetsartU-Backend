@@ -36,6 +36,15 @@ class DefaultModel {
         return this.n;
     }
 
+    /**
+     * get model name as lower case
+     * @static 
+     * @returns {string} database name
+     */
+    get low_name() {
+        return this.n.toLowerCase();
+    }
+
     set name(name) {
         this.n = name;
     }
@@ -133,12 +142,27 @@ class DefaultModel {
     }
 
     /**
+     * remove row by using condition
+     * @param {object} condition remving condition
+     */
+    delete_by_condition(condition) {
+        return this.model.remove(condition).exec();
+    }
+
+    /**
      * count element model by [condition]
      * @param {object} condition filter model and counting {@link http://mongoosejs.com/docs/api.html#model_Model.count|Model.count}
      * @returns {Promise<Null>} promise of count number
      */
     count(condition = {}) {
         return this.model.count(condition).exec();
+    }
+
+    /** 
+     * clear all row this model (Table)
+     */
+    clear_db() {
+        return this.delete_by_condition({});
     }
 }
 

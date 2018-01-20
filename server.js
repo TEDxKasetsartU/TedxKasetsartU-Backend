@@ -35,15 +35,42 @@ app.use(bodyParser.urlencoded({
 }));
 
 // Require our routes into the application.
-const Speaker = require("./app/models").speaker;
+const indexRoute = require("./app/routes");
 
-const DefRoute = require("./app/routes/default");
+const ignore = ["create", "delete", "update"];
 
-const default_route = new DefRoute(app, Speaker);
-default_route.exec();
+indexRoute(app, {
+    "default_path": "/api",
+    "version": "v1",
+    "fixtures": require("./app/db/fixtures/index")
+}, [{
+    "model": {
+        "object": require("./app/models").speaker,
+        "clear": true
+    },
+    "controller": {
+        "ignore": ignore
+    }
+}, {
+    "model": {
+        "object": require("./app/models").member,
+        "clear": true
+    },
+    "controller": {
+        "ignore": ignore
+    }
+}, {
+    "model": {
+        "object": require("./app/models").banner,
+        "clear": true
+    },
+    "controller": {
+        "ignore": ignore
+    }
+}]);
 
 const server = app.listen(port, () => {
-    console.log("RESTful API server started on: " + port);
+    console.log("RESTful API server started on: " + port + " as '" + env + "'");
 });
 
 module.exports = {
