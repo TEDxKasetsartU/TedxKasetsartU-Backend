@@ -1,0 +1,19 @@
+[{
+    "name": "AAAA aaaa",
+    "speaker_info": "Work on XX, and YY",
+    "topic": "NodeJS",
+    "description": "Learn zero to hero",
+    "youtube_url_id": "123123123"
+}, {
+    "name": "974813B1 15D9",
+    "speaker_info": "Work on WW, and VV",
+    "topic": "Java",
+    "description": "Java is WHAT?",
+    "youtube_url_id": "3321312311"
+}, {
+    "name": "A47A 4CC8BD713481",
+    "speaker_info": "Work on TT, and SS",
+    "topic": "Python",
+    "description": "python is a snack!",
+    "youtube_url_id": "984859483"
+}]
