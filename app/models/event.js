@@ -1,16 +1,31 @@
 const DefaultModel = require("./default");
+const Types = require("mongoose").Schema.Types;
 
-const MemberModel = new DefaultModel("Event", {
+const EventModel = new DefaultModel("Event", {
     year: {
-        type: Number
+        type: Number,
+        unique: true,
+        index: true,
+        required: [true, "Event year is required"]
     },
-    member: {
-        type: require("mongoose").Schema.Types.ObjectId,
+    datetime: {
+        type: Date
+    },
+    locations: {
+        type: [Types.ObjectId],
+        ref: "Location"
+    },
+    speakers: {
+        type: [Types.ObjectId],
+        ref: "Speaker"
+    },
+    members: {
+        type: [Types.ObjectId],
         ref: "Member"
     },
-    speaker: {
-        type: require("mongoose").Schema.Types.ObjectId,
-        ref: "Speaker"
+    banners: {
+        type: [Types.ObjectId],
+        ref: "Banner"
     }
 }, {
     timestamps: {
@@ -19,4 +34,4 @@ const MemberModel = new DefaultModel("Event", {
     }
 });
 
-module.exports = MemberModel;
+module.exports = EventModel;

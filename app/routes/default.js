@@ -61,42 +61,57 @@ class DefaultRoute {
     }
 
     get_list(custom = "") {
-        this._log_create_log("list path", this.get_custom_path(this.pl_name, custom));
+        if (this.controller.can_do("list")) {
+            this._log_create_log("list", this.get_custom_path(this.pl_name, custom));
+        }
         this.express.get(this.get_custom_path(this.pl_name, custom), (req, res) => {
             return this.controller.list(req, res);
         });
     }
 
     get_retrieve(id = "fid") {
-        this._log_create_log("get path", this.get_custom_path(this.name, ":" + id));
+        if (this.controller.can_do("get")) {
+            this._log_create_log("get", this.get_custom_path(this.name, ":" + id));
+        }
         this.express.get(this.get_custom_path(this.name, ":" + id), (req, res) => {
             return this.controller.get(req, res, id);
         });
     }
 
     post_create(custom = "") {
-        this._log_create_log("create path", this.get_custom_path(this.name, custom));
+        if (this.controller.can_do("create")) {
+            this._log_create_log("create", this.get_custom_path(this.name, custom));
+        }
         this.express.post(this.get_custom_path(this.name, custom), (req, res) => {
             return this.controller.create(req, res);
         });
     }
 
     put_update(id = "fid") {
-        this._log_create_log("update path", this.get_custom_path(this.name, ":" + id));
+        if (this.controller.can_do("update")) {
+            this._log_create_log("update", this.get_custom_path(this.name, ":" + id));
+        }
         this.express.put(this.get_custom_path(this.name, ":" + id), (req, res) => {
             return this.controller.update(req, res, id);
         });
     }
 
     delete_destroy(id = "fid") {
-        this._log_create_log("delete path", this.get_custom_path(this.name, ":" + id));
+
+        if (this.controller.can_do("delete")) {
+            this._log_create_log("delete", this.get_custom_path(this.name, ":" + id));
+        }
         this.express.delete(this.get_custom_path(this.name, ":" + id), (req, res) => {
             return this.controller.delete(req, res, id);
         });
     }
 
-    _log_create_log(action, msg) {
-        console.log(action + ": " + msg);
+    _log_create_log(action, path) {
+        const logger = require("../apis/custom_logger").logger;
+        logger.log("info", {
+            "title": action,
+            "url": path
+        });
     }
 }
 

@@ -40,16 +40,17 @@ module.exports = (expressApp, route_settings, settings) => {
         } else {
             _auto_load_fixture(model, route_settings.fixtures);
         }
-        let controller = setting.controller.object;
-        let ignore_path = setting.controller.ignore;
-        let params = route_settings;
-        params["controller"] = controller;
-        params["controller_options"] = {
-            "apis": {
-                "ignore": ignore_path
-            }
-        };
-
+        let params = JSON.parse(JSON.stringify(route_settings));
+        if (setting.controller) {
+            let controller = setting.controller.object;
+            let ignore_path = setting.controller.ignore;
+            params["controller"] = controller;
+            params["controller_options"] = {
+                "apis": {
+                    "ignore": ignore_path
+                }
+            };
+        }
         const default_route = new DefRoute(expressApp, model, params);
         default_route.exec();
     });

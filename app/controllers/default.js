@@ -39,6 +39,7 @@ class DefaultController {
             apis.forEach(element => {
                 if (this.apis[element] != true && this.apis[element] != false)
                     rej(new Error(element + " is invalid key"));
+
                 this.apis[element] = false;
             });
             res();
@@ -53,6 +54,10 @@ class DefaultController {
 
     defaultResponse(request, response) {
         respAPIs.set_200(response, "Empty page, learn more on document");
+    }
+
+    can_do(action) {
+        return this.apis[action];
     }
 
     create(request, response) {
