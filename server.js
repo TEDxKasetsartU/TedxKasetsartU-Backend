@@ -39,6 +39,9 @@ const indexRoute = require("./app/routes");
 
 const ignore = ["create", "delete", "update"];
 
+/**
+ * 
+ */
 indexRoute(app, {
     "default_path": "/api",
     "version": "v1",
@@ -54,6 +57,14 @@ indexRoute(app, {
 }, {
     "model": {
         "object": require("./app/models").member,
+        "clear": true
+    },
+    "controller": {
+        "ignore": ignore
+    }
+}, {
+    "model": {
+        "object": require("./app/models").location,
         "clear": true
     },
     "controller": {

@@ -71,6 +71,8 @@
     "nyc": "^11.4.1"
   },
   "apidoc": {
-    "title": "API Documents for TEDxKasetsartU"
+    "title": "API Documents for TEDxKasetsartU",
+    "url": "https://tedxku-backend.herokuapp.com",
+    "sampleUrl": "https://tedxku-backend.herokuapp.com"
   }
 }
