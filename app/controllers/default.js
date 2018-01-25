@@ -52,10 +52,6 @@ class DefaultController {
         });
     }
 
-    defaultResponse(request, response) {
-        respAPIs.set_200(response, "Empty page, learn more on document");
-    }
-
     can_do(action) {
         return this.apis[action];
     }

@@ -3,6 +3,7 @@ const morgan = require("morgan");
 const Logger = require("./app/apis/custom_logger").logger;
 const bodyParser = require("body-parser");
 const uuid = require("uuid/v1");
+const package = require("./package.json");
 
 
 const env = process.env.NODE_ENV || "development";
@@ -94,6 +95,32 @@ indexRoute(app, {
         "object": require("./app/models").event
     }
 }]);
+
+app.get("/", (req, res) => {
+    require("./app/apis/response").set_200(res, "Empty page, learn more on document");
+});
+
+/**
+ * 
+ * @api {get} /version get app version
+ * @apiName GetVersion
+ * @apiGroup version
+ * @apiVersion  0.2.0-beta.2
+ * 
+ * @apiSuccess (200) {Object} response Response object
+ * @apiSuccess (200) {Boolean} response.complete complete flag
+ * @apiSuccess (200) {String} response.result version as string
+ * 
+ * @apiSuccessExample  {Object} Success-Example:
+ * {
+ *      "complete": true,
+ *      "result": "0.2.0-beta.2"
+ * }
+ * 
+ */
+app.get("/version", (req, res) => {
+    require("./app/apis/response").set_200(res, package["version"]);
+});
 
 const server = app.listen(port, () => {
     const supportsColor = require("supports-color");
