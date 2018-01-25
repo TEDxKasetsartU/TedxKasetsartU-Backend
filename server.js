@@ -123,20 +123,18 @@ app.get("/version", (req, res) => {
 });
 
 const server = app.listen(port, () => {
-    const supportsColor = require("supports-color");
     const chalk = require("chalk");
 
-    if (supportsColor.stdout) {
-        Logger.log("info", "Terminal stdout supports color");
-    }
-
-    if (supportsColor.stdout.has256) {
-        Logger.log("info", "Terminal stdout supports 256 colors");
-    }
-
-    if (supportsColor.stderr.has16m) {
-        Logger.log("info", "Terminal stderr supports 16 million colors (truecolor)");
-    }
+    // const supportsColor = require("supports-color");
+    // if (supportsColor.stdout) {
+    //     Logger.log("info", "Terminal stdout supports color");
+    // }
+    // if (supportsColor.stdout.has256) {
+    //     Logger.log("info", "Terminal stdout supports 256 colors");
+    // }
+    // if (supportsColor.stderr.has16m) {
+    //     Logger.log("info", "Terminal stderr supports 16 million colors (truecolor)");
+    // }
 
     Logger.log("info", "RESTful API server started on: " + port + " as '" + chalk `{red.underline ${env}}` + "'");
 });
