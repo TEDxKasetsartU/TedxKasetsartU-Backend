@@ -48,12 +48,14 @@ class DefaultRoute {
     }
 
     exec() {
-        this.get_list();
-        this.get_retrieve();
-        this.post_create();
-        this.put_update();
-        this.delete_destroy();
-        // this.default_get();
+        return new Promise((res) => {
+            this.get_list();
+            this.get_retrieve();
+            this.post_create();
+            this.put_update();
+            this.delete_destroy();
+            res();
+        });
     }
 
     default_get() {

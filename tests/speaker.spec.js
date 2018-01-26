@@ -7,7 +7,6 @@ const Speaker = model.speaker;
 //Require the dev-dependencies
 const chai = require("chai");
 const chaiHttp = require("chai-http");
-const server = require("../server");
 const {
     expect
 } = require("chai");
@@ -32,8 +31,8 @@ function createSpeaker(param) {
 
 //Our parent block
 describe("Speakers", () => {
-    before(() => {
-
+    before(async() => {
+        this.server = await require("../server");
     });
 
     after((done) => {
@@ -45,7 +44,7 @@ describe("Speakers", () => {
      */
     describe("/GET speaker", () => {
         it("it should GET all the speakers", () => {
-            return chai.request(server.app)
+            return chai.request(this.server.app)
                 .get("/api/v1/speakers")
                 .then((res) => {
                     expect(res).to.have.status(200);
@@ -57,7 +56,7 @@ describe("Speakers", () => {
             return createSpeaker({
                 "name": name
             }).then(speaker => {
-                return chai.request(server.app)
+                return chai.request(this.server.app)
                     .get("/api/v1/speaker/" + speaker.id)
                     .then((res) => {
                         expect(res).to.have.status(200);
@@ -66,7 +65,7 @@ describe("Speakers", () => {
         });
 
         it("GET not exist indv speaker", () => {
-            return chai.request(server.app)
+            return chai.request(this.server.app)
                 .get("/api/v1/speaker/400")
                 .catch((err) => {
                     expect(err).to.have.status(400);
@@ -86,12 +85,12 @@ describe("Speakers", () => {
         // };
 
         it("create speaker (correctly)", () => {
-            return chai.request(server.app)
+            return chai.request(this.server.app)
                 .post("/api/v1/speaker")
                 .send(correct_speaker)
                 .then((res) => {
                     console.log(res);
-                    
+
                     expect(res).to.have.status(201);
                 });
         });
@@ -117,7 +116,7 @@ describe("Speakers", () => {
         };
 
         it("update not exist speaker", () => {
-            return chai.request(server.app)
+            return chai.request(this.server.app)
                 .put("/api/v1/speaker/500")
                 .send(new_name)
                 .catch((err) => {
@@ -130,7 +129,7 @@ describe("Speakers", () => {
             return createSpeaker({
                 "name": name
             }).then((speaker) => {
-                return chai.request(server.app)
+                return chai.request(this.server.app)
                     .put("/api/v1/speaker/" + speaker.id)
                     .send(new_name)
                     .then((res) => {
@@ -149,7 +148,7 @@ describe("Speakers", () => {
 
     describe.skip("/DELETE speaker", () => {
         it("delete not exist speaker", () => {
-            return chai.request(server.app)
+            return chai.request(this.server.app)
                 .delete("/api/v1/speaker/500")
                 .catch((err) => {
                     expect(err).to.have.status(400);
@@ -161,7 +160,7 @@ describe("Speakers", () => {
             return createSpeaker({
                 "name": name
             }).then((speaker) => {
-                return chai.request(server.app)
+                return chai.request(this.server.app)
                     .delete("/api/v1/speaker/" + speaker.id)
                     .then((res) => {
                         expect(res).to.have.status(204);

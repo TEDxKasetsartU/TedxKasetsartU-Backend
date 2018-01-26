@@ -16,6 +16,7 @@
  */
 module.exports = (expressApp, route_settings, settings) => {
     const DefRoute = require("../routes/default");
+    let creators = [];
 
     settings.forEach(setting => {
         const _auto_load_fixture = (model, fixtures) => {
@@ -45,24 +46,26 @@ module.exports = (expressApp, route_settings, settings) => {
 
         let model = setting.model.object;
         let fixture = setting.model.fixture;
+        let params = JSON.parse(JSON.stringify(route_settings));
+        if (setting.controller) {
+            let controller = setting.controller.object;
+            let ignore_path = setting.controller.ignore;
+            params["controller"] = controller;
+            params["controller_options"] = {
+                "apis": {
+                    "ignore": ignore_path
+                }
+            };
+        }
 
         if (setting.model.clear)
-            model.clear_db();
+            creators.push(model.clear_db());
 
-        choose_fixture_to_load(fixture, model, fixture, route_settings.fixtures).then((result) => {
-            let params = JSON.parse(JSON.stringify(route_settings));
-            if (setting.controller) {
-                let controller = setting.controller.object;
-                let ignore_path = setting.controller.ignore;
-                params["controller"] = controller;
-                params["controller_options"] = {
-                    "apis": {
-                        "ignore": ignore_path
-                    }
-                };
-            }
+        creators.push(choose_fixture_to_load(fixture, model, fixture, route_settings.fixtures).then(() => {
             const default_route = new DefRoute(expressApp, model, params);
-            default_route.exec();
-        }).catch(() => {});
+            return default_route.exec();
+        }));
     });
+
+    return Promise.all(creators);
 };
