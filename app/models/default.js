@@ -53,9 +53,17 @@ class DefaultModel {
      * @constructor
      */
     constructor(database_name, database_columns, database_options) {
+        this.env = process.env.NODE_ENV || "development";
+
         this.name = database_name;
         this.schema = new this.mongoose.Schema(database_columns, database_options);
+        if (this._is_testing())
+            this.schema.plugin(require("mongoose-simple-random"));
         this.model = this.mongoose.model(database_name, this.schema);
+    }
+
+    _is_testing() {
+        return (this.env == "development" || this.env == "test" || this.env == "citest");
     }
 
     /**
@@ -76,12 +84,18 @@ class DefaultModel {
     /**
      * list row in database, by limitation and next
      * @param {number} next next element, More {@link https://docs.mongodb.com/manual/reference/method/cursor.skip/#cursor.skip|mongodb-skip}
+     * @param {object} option option for list
+     * @param {number} option.default_limit overide default limit
      * @returns {Promise<Array<Model>>} promise of list of mongo model
      */
-    list(next) {
-        return this.model.find({}, null, {
-            "limit": this.DEFAULT_LIMIT,
-            "skip": next * this.DEFAULT_LIMIT
+    list(next, option) {
+        let limit = this.DEFAULT_LIMIT;
+        let filter = {};
+        if (option && option.default_limit) limit = option.default_limit;
+        if (option && option.filter) filter = option.filter;
+        return this.model.find(filter, null, {
+            "limit": limit,
+            "skip": next * limit
         }).exec();
     }
 
@@ -156,6 +170,20 @@ class DefaultModel {
      */
     count(condition = {}) {
         return this.model.count(condition).exec();
+    }
+
+    random(filter = {}, fields = {}, options = {}) {
+        if (!this._is_testing()) return new Promise((res) => {
+            res();
+        });
+
+        return new Promise((res, rej) => {
+            return this.model.findRandom(filter, fields, options, function (err, results) {
+                if (err)
+                    return rej(err);
+                return res(results);
+            });
+        });
     }
 
     /** 

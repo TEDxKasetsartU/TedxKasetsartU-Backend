@@ -19,15 +19,28 @@ module.exports = (expressApp, route_settings, settings) => {
 
     settings.forEach(setting => {
         const _auto_load_fixture = (model, fixtures) => {
-            if (fixtures[model.low_name]) {
-                fixtures[model.low_name].forEach((element) => {
-                    _load_fixture(model, element);
+            if (fixtures.json[model.low_name]) {
+                let promises = [];
+                fixtures.json[model.low_name].forEach((element) => {
+                    promises.push(_load_fixture(model, element));
                 });
+                return Promise.all(promises);
+            } else if (fixtures.js[model.low_name]) {
+                const method = fixtures.js[model.low_name];
+                return method();
             }
         };
 
         const _load_fixture = (model, fixture) => {
-            model.create(fixture);
+            return model.create(fixture);
+        };
+
+        const choose_fixture_to_load = (is_fixture, model, fixture, fixtures) => {
+            if (is_fixture) {
+                return _load_fixture(model, fixture);
+            } else {
+                return _auto_load_fixture(model, fixtures);
+            }
         };
 
         let model = setting.model.object;
@@ -35,23 +48,21 @@ module.exports = (expressApp, route_settings, settings) => {
 
         if (setting.model.clear)
             model.clear_db();
-        if (fixture) {
-            _load_fixture(model, fixture);
-        } else {
-            _auto_load_fixture(model, route_settings.fixtures);
-        }
-        let params = JSON.parse(JSON.stringify(route_settings));
-        if (setting.controller) {
-            let controller = setting.controller.object;
-            let ignore_path = setting.controller.ignore;
-            params["controller"] = controller;
-            params["controller_options"] = {
-                "apis": {
-                    "ignore": ignore_path
-                }
-            };
-        }
-        const default_route = new DefRoute(expressApp, model, params);
-        default_route.exec();
+
+        choose_fixture_to_load(fixture, model, fixture, route_settings.fixtures).then((result) => {
+            let params = JSON.parse(JSON.stringify(route_settings));
+            if (setting.controller) {
+                let controller = setting.controller.object;
+                let ignore_path = setting.controller.ignore;
+                params["controller"] = controller;
+                params["controller_options"] = {
+                    "apis": {
+                        "ignore": ignore_path
+                    }
+                };
+            }
+            const default_route = new DefRoute(expressApp, model, params);
+            default_route.exec();
+        }).catch(() => {});
     });
 };

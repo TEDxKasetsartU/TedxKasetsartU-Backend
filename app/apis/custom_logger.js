@@ -17,7 +17,6 @@ const defaultFormat = (info) => {
     if (typeof info.message == "string") {
         header += `${info.message}`;
     }
-
     if (info.message.title) {
         header += chalk `{red.bold ${info.message.title}}`;
     }
@@ -27,12 +26,11 @@ const defaultFormat = (info) => {
 
         if (env == "development") {
             prefix = "http://localhost:3000";
-        } else if (env == "test") {
-            prefix = "https://tedxku-backend.herokuapp.com";
+        } else if (env == "citest" || env == "test") {
+            prefix = "http://localhost:3000";
         } else {
             prefix = "https://tedxku-backend.herokuapp.com";
         }
-
         header += chalk ` {green.underline ${prefix}${info.message.url}}`;
     }
     if (info.message.message) {
