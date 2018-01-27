@@ -4,15 +4,19 @@ const errors = require("restify-error");
  * create mongo schema and model, 
  * More {@link http://mongoosejs.com/docs/guide.html#options|mongoosejs}
  * @class
+ * 
  * @param {string} database_name database name
- * @param {object} database_columns column inside database
- * @param {object} database_options option of Schema creator 
+ * @param {Object} database_columns column inside database
+ * @param {Object} database_options option of Schema creator 
+ * 
+ * @author Kamontat Chantrachirathumrong
+ * @version 0.2.0-beta.3
  */
 class DefaultModel {
     /**
      * mongoose instance
      * @static
-     *  @returns {object} mongooes
+     *  @returns {Object} mongooes
      */
     get mongoose() {
         return require("mongoose");
@@ -38,19 +42,27 @@ class DefaultModel {
 
     /**
      * get model name as lower case
-     * @static 
      * @returns {string} database name
      */
     get low_name() {
         return this.n.toLowerCase();
     }
 
+    /**
+     * setter of model name
+     * @param {string} name new name
+     */
     set name(name) {
         this.n = name;
     }
 
     /**
      * @constructor
+     * 
+     * @param {string} database_name database name
+     * @param {Object} database_columns column inside database
+     * @param {Object} database_options option of Schema creator 
+     * 
      */
     constructor(database_name, database_columns, database_options) {
         this.env = process.env.NODE_ENV || "development";
@@ -62,13 +74,17 @@ class DefaultModel {
         this.model = this.mongoose.model(database_name, this.schema);
     }
 
+    /** 
+     * check environment is testing (dev,test,citest)
+     * @private
+     */
     _is_testing() {
         return (this.env == "development" || this.env == "test" || this.env == "citest");
     }
 
     /**
      * create new model
-     * @param {object} parameters model columns
+     * @param {Object} parameters model columns
      * @returns {Promise<Model>} promise of mongo model
      */
     create(parameters) {
@@ -84,14 +100,15 @@ class DefaultModel {
     /**
      * list row in database, by limitation and next
      * @param {number} next next element, More {@link https://docs.mongodb.com/manual/reference/method/cursor.skip/#cursor.skip|mongodb-skip}
-     * @param {object} option option for list
-     * @param {number} option.default_limit overide default limit
+     * @param {Object} option option for list
+     * @param {number|string} option.default_limit overide default limit, input 'all' to list every result
+     * @param {Object} option.filter filter result, must be JSON which key is same as column
      * @returns {Promise<Array<Model>>} promise of list of mongo model
      */
     list(next, option) {
         let limit = this.DEFAULT_LIMIT;
         let filter = {};
-        if (option && option.default_limit) limit = option.default_limit;
+        if (option && option.default_limit) limit = Number(option.default_limit);
         if (option && option.filter) filter = option.filter;
         return this.model.find(filter, null, {
             "limit": limit,
@@ -119,7 +136,7 @@ class DefaultModel {
     /**
      * update model that have id same as input id
      * @param {string} id input id
-     * @param {object} body update column 
+     * @param {Object} body update column 
      * @returns {Promise<Model>} promise of new mongo model
      */
     update(id, body) {
@@ -157,7 +174,7 @@ class DefaultModel {
 
     /**
      * remove row by using condition
-     * @param {object} condition remving condition
+     * @param {Object} condition remving condition
      */
     delete_by_condition(condition) {
         return this.model.remove(condition).exec();
@@ -165,13 +182,23 @@ class DefaultModel {
 
     /**
      * count element model by [condition]
-     * @param {object} condition filter model and counting {@link http://mongoosejs.com/docs/api.html#model_Model.count|Model.count}
+     * @param {Object} condition filter model and counting {@link http://mongoosejs.com/docs/api.html#model_Model.count|Model.count}
      * @returns {Promise<Null>} promise of count number
      */
     count(condition = {}) {
         return this.model.count(condition).exec();
     }
 
+    /**
+     * random element using {@link https://www.npmjs.com/package/mongoose-simple-random|mongoose-simple-random}
+     * @param {Object} filter filter result
+     * @param {Object} fields choose the result output
+     * @param {Object} options resut management
+     * @param {number} options.skip skip result, same as next
+     * @param {number} options.limit limit the result, default is array size 1
+     * 
+     * @returns {Promise<Object[]>} promise of the random object as array
+     */
     random(filter = {}, fields = {}, options = {}) {
         if (!this._is_testing()) return new Promise((res) => {
             res();
@@ -188,6 +215,7 @@ class DefaultModel {
 
     /** 
      * clear all row this model (Table)
+     * @returns {Promise<null>} promise of null
      */
     clear_db() {
         return this.delete_by_condition({});

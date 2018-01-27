@@ -1,5 +1,6 @@
-const respAPIs = require("../apis/response");
-
+/** 
+ * @class
+ */
 class DefaultController {
 
     get model_name() {
@@ -8,12 +9,12 @@ class DefaultController {
 
     /**
      * @constructor
-     * @param {*} model 
-     * @param {object} options option of controller
-     * @param {object} options.apis api option
+     * @param {Model} model database model
+     * @param {Object} options option of controller
+     * @param {Object} options.apis api option
      * @param {string[]} options.apis.ignore ignore method, accept "create", "get", "list", "update", "delete"
      */
-    constructor(model, options) {
+    constructor(model, options = {}) {
         this.apis = {
             "create": true,
             "get": true,
@@ -22,8 +23,9 @@ class DefaultController {
             "delete": true
         };
         this.model = model;
+        this.respAPIs = require("../apis/response");
 
-        if (options && options.apis && options.apis.ignore)
+        if (options.apis && options.apis.ignore)
             this.setAPIs(options.apis.ignore).catch((err) => {
                 throw err;
             });
@@ -31,7 +33,7 @@ class DefaultController {
     /**
      * set ignore/disable apis option
      * @private
-     * @param {object} apis object that 
+     * @param {Object} apis object that 
      * have accept key is "create", "get", "list", "update", "delete"
      */
     setAPIs(apis) {
@@ -61,34 +63,38 @@ class DefaultController {
             .then(() => {
                 return this.model.create(request.body);
             })
-            .then((result) => respAPIs.set_201(response, result))
-            .catch((error) => respAPIs.set_400(response, error));
+            .then((result) => this.respAPIs.set_201(response, result))
+            .catch((error) => this.respAPIs.set_400(response, error));
     }
 
     update(request, response, dynamicPath = "fid") {
         this.checkAPIsAllow(this.update)
             .then(() => {
                 return this.model.update(request.params[dynamicPath], request.body);
-            }).then((result) => respAPIs.set_200(response, result))
-            .catch((error) => respAPIs.set_400(response, error));
+            }).then((result) => this.respAPIs.set_200(response, result))
+            .catch((error) => this.respAPIs.set_400(response, error));
     }
 
     get(request, response, dynamicPath = "fid") {
         this.checkAPIsAllow(this.get)
             .then(() => {
                 return this.model.retrieve(request.params[dynamicPath]);
-            }).then((result) => respAPIs.set_200(response, result))
-            .catch((error) => respAPIs.set_400(response, error));
+            }).then((result) => this.respAPIs.set_200(response, result))
+            .catch((error) => this.respAPIs.set_400(response, error));
     }
 
     list(request, response) {
         this.checkAPIsAllow(this.list)
             .then(() => {
-                return this.model.list(request.query.next);
+                let opt = {};
+                if (request.query.default_limit) {
+                    opt.default_limit = request.query.default_limit;
+                }
+                return this.model.list(request.query.next, opt);
             })
             .then(models => {
                 return this.model.count().then((total) => {
-                    respAPIs.set_200(response, {
+                    this.respAPIs.set_200(response, {
                         "total": total,
                         "list": models,
                         "length": models.length
@@ -96,7 +102,7 @@ class DefaultController {
                 });
             })
             .catch(error => {
-                return respAPIs.set_400(response, error);
+                return this.respAPIs.set_400(response, error);
             });
     }
 
@@ -104,8 +110,8 @@ class DefaultController {
         this.checkAPIsAllow(this.delete)
             .then(() => {
                 return this.model.delete(request.params[dynamicPath]);
-            }).then(() => respAPIs.set_204(response))
-            .catch((error) => respAPIs.set_400(response, error));
+            }).then(() => this.respAPIs.set_204(response))
+            .catch((error) => this.respAPIs.set_400(response, error));
     }
 }
 

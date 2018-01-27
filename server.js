@@ -81,7 +81,20 @@ module.exports = indexRoute(app, {
 }, {
     "model": {
         "object": require("./app/models").event
-    }
+    },
+    "controller": {
+        "object": require("./app/controllers/event_controller")
+    },
+    "functions": [
+        (express, model, controller, path_name, path_pl_name, log_func) => {
+            if (controller.can_do("list")) {
+                log_func("list (year)", path_pl_name + "/:year");
+            }
+            express.get(path_pl_name + "/:year", (req, res) => {
+                return controller.list_by_year(req, res);
+            });
+        }
+    ]
 }]).then(() => {
     /**
      * 
