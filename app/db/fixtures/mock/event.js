@@ -8,7 +8,7 @@ const query = (model, size) => {
         models[model].random({}, {
             "_id": 1
         }, {
-            "limit": random(1, 10)
+            "limit": size
         }).then((list) => {
             return res(list);
         }).catch(err => {
