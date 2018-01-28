@@ -30,6 +30,6 @@ cd "$(dirname "$0")" || exit 1
     - preminor
     - premajor
     - prerelease
-"
+" && exit 0
 
 npm version "$1"
