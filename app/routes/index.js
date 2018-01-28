@@ -7,13 +7,13 @@
  * @param {Object} route_settings.default_path prefix of path
  * @param {Object} route_settings.version path version
  * @param {Object} route_settings.fixtures model fixture, auto map by model name and file name
- * @param {Object} settings setting of model and controller
+ * @param {Object[]} settings setting of model and controller
  * @param {Object} settings.model model setting
  * @param {Object} settings.model.object model of route
  * @param {Object} settings.model.fixture fixture of model
- * @param {Object} settings.model.clear pass 'true', if want to clear all record inside model
+ * @param {boolean} settings.model.clear pass 'true', if want to clear all record inside model
  * @param {Object} settings.controller controller setting
- * @param {Object} settings.controller.object controller of model
+ * @param {DefaultController} settings.controller.object controller of model
  * @param {Object} settings.controller.ignore ignore which APIs
  * @param {Function} settings.functions list of custom APIs function
  * 
@@ -22,7 +22,7 @@
  * @author Kamontat Chantrachirathumrong
  * @version 0.2.0-beta.3
  */
-module.exports = (expressApp, route_settings, settings) => {
+module.exports = (expressApp, route_settings, settings = []) => {
     const DefRoute = require("../routes/default");
     let creators = [];
 
