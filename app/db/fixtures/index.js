@@ -3,7 +3,7 @@ const env = process.env.NODE_ENV || "development";
 
 
 let folder = "";
-if (env == "development" || env == "test") {
+if (env == "development" || env == "test" || env == "citest") {
     folder = "/mock";
 } else {
     folder = "/real";
