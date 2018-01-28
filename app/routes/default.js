@@ -21,16 +21,6 @@ class DefaultRoute {
      * Setup each of parameter and initial variable.
      * 
      * @constructor
-     * @param {Object} expressApp express Object
-     * @param {Object} model database model
-     * @param {Object} parameter route parameters
-     * @param {string} parameter.default_path prefix path
-     * @param {string} parameter.version route version
-     * @param {string} parameter.controller controller Object
-     * @param {Object} parameter.controller_options controller options
-     * @param {string} parameter.name model name (single)
-     * @param {string} parameter.pl_name model name (plural)
-     * @param {function} parameter.functions list of custom APIs
      */
     constructor(expressApp, model, parameter = {}) {
         const DefController = require("../controllers/default");

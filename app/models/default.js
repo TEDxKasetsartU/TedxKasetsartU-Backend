@@ -58,11 +58,6 @@ class DefaultModel {
 
     /**
      * @constructor
-     * 
-     * @param {string} database_name database name
-     * @param {Object} database_columns column inside database
-     * @param {Object} database_options option of Schema creator 
-     * 
      */
     constructor(database_name, database_columns, database_options) {
         this.env = process.env.NODE_ENV || "development";
@@ -103,7 +98,7 @@ class DefaultModel {
      * @param {Object} option option for list
      * @param {number|string} option.default_limit overide default limit, input 'all' to list every result
      * @param {Object} option.filter filter result, must be JSON which key is same as column
-     * @returns {Promise<Array<Model>>} promise of list of mongo model
+     * @returns {Promise<Model[]>} promise of list of mongo model
      */
     list(next, option) {
         let limit = this.DEFAULT_LIMIT;

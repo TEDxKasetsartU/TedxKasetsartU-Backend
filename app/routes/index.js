@@ -1,5 +1,6 @@
 /**
  * Index of creating route helper
+ * @name route_index
  * 
  * @param {Object} expressApp express object
  * @param {Object} route_settings setting of route
