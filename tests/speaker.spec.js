@@ -31,8 +31,11 @@ function createSpeaker(param) {
 
 //Our parent block
 describe("Speakers", () => {
-    before(async() => {
-        this.server = await require("../server");
+    before((done) => {
+        require("../server").then((res) => {
+            this.server = res;
+            done();
+        });
     });
 
     after((done) => {
