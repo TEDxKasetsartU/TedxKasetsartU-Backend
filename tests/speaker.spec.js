@@ -31,20 +31,10 @@ function createSpeaker(param) {
 
 //Our parent block
 describe("Speakers", () => {
-    before((done) => {
-        require("../server").then((res) => {
-            this.server = res;
-            done();
-        });
+    before(async() => {
+        this.server = await require("../server");
     });
 
-    after((done) => {
-        done();
-    });
-
-    /*
-     * Test the /GET route
-     */
     describe("/GET speaker", () => {
         it("it should GET all the speakers", () => {
             return chai.request(this.server.app)
@@ -76,16 +66,10 @@ describe("Speakers", () => {
         });
     });
 
-    /*
-     * Test the /POST route
-     */
     describe.skip("/POST speaker", () => {
         const correct_speaker = {
             name: "speaker" + getRandomInt(1, 500000)
         };
-        // const missing_speaker = {
-        //     title: "speaker" + getRandomInt(1, 500000)
-        // };
 
         it("create speaker (correctly)", () => {
             return chai.request(this.server.app)
@@ -97,20 +81,6 @@ describe("Speakers", () => {
                     expect(res).to.have.status(201);
                 });
         });
-
-        // it("create speaker (wrong format)", (done) => {
-        //     chai.request(server.app)
-        //         .post("/api/v1/speaker/create")
-        //         .send(missing_speaker)
-        //         .then((res) => {
-        //             expect(res).to.have.status(400);
-        //             done();
-        //         })
-        //         .catch((err) => {
-        //             expect(err).to.have.status(400);
-        //             done();
-        //         });
-        // });
     });
 
     describe.skip("/PUT speaker", () => {

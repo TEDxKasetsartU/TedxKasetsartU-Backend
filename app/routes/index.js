@@ -44,6 +44,8 @@ module.exports = (expressApp, route_settings, settings = []) => {
             } else if (fixtures.js[model.low_name]) {
                 const method = fixtures.js[model.low_name];
                 return method();
+            } else {
+                console.log(model.low_name + " fixtures not exist");
             }
         };
 
@@ -56,8 +58,8 @@ module.exports = (expressApp, route_settings, settings = []) => {
          * @param {json[]} fixtures.json json of column to create
          * @param {function[]} fixtures.js js fixture generator, This method should return Promise<null> and accept none parameter
          */
-        const choose_fixture_to_load = (is_fixture, model, fixture, fixtures) => {
-            if (is_fixture) {
+        const choose_fixture_to_load = (model, fixture, fixtures) => {
+            if (fixture) {
                 return _load_fixture(model, fixture);
             } else {
                 return _auto_load_fixture(model, fixtures);
@@ -90,7 +92,7 @@ module.exports = (expressApp, route_settings, settings = []) => {
         if (setting.functions) params["functions"] = setting.functions;
         if (setting.model.clear) creators.push(model.clear_db());
 
-        creators.push(choose_fixture_to_load(fixture, model, fixture, route_settings.fixtures).then(() => {
+        creators.push(choose_fixture_to_load(model, fixture, route_settings.fixtures).then(() => {
             const default_route = new DefRoute(expressApp, model, params);
             return default_route.exec();
         }));

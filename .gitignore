@@ -114,7 +114,7 @@ tags
 ### Database ###
 app/db
 !app/db/.gitkeep
-!app/db/fixtures
+!app/db/fixtures/*
 
 ### Test ###
 test-results.xml
