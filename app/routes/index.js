@@ -46,6 +46,9 @@ module.exports = (expressApp, route_settings, settings = []) => {
                 return method();
             } else {
                 console.log(model.low_name + " fixtures not exist");
+                return new Promise((res) => {
+                    res();
+                });
             }
         };
 
