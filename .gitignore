@@ -112,9 +112,11 @@ tags
 .history
 
 ### Database ###
-app/db
-!app/db/.gitkeep
-!app/db/fixtures/*
+app/db/db
+app/db/logs
+!app/db/config
+!app/db/fixtures
+!app/db/scripts
 
 ### Test ###
 test-results.xml
