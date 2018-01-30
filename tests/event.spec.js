@@ -12,7 +12,7 @@ function getRandomInt(min, max) {
 
 function randomEvent() {
     return settings.model.event.count().then(res => {
-        // console.log("event size: " + res);
+        console.log("event size: " + res);
         return settings.model.event.randomOne();
     });
 }
