@@ -35,8 +35,8 @@ describe("Events", () => {
     });
 
     describe("/GET event", () => {
-        before(async () => {
-            await fixture_loader("event");
+        before(() => {
+            return fixture_loader("event");
         });
 
         it("it should GET all the events", async () => {
@@ -73,8 +73,8 @@ describe("Events", () => {
     });
 
     describe("/GET event year", () => {
-        before(async () => {
-            await fixture_loader("event");
+        before(() => {
+            return fixture_loader("event");
         });
 
         it("it should GET list all year available", async () => {
