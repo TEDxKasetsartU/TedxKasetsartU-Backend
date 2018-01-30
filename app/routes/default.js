@@ -1,16 +1,43 @@
+/** 
+ * This is object of utils function for manage about route in application.
+ * @namespace RouteUtils
+ * 
+ * @returns {Object} object of utils function.
+ * @returns {Object} object.create create function, use to create new route.
+ * @returns {Object} object.default default route function, use to create default route such as empty path or version path.
+ * 
+ * @version 0.3.0
+ * @author Kamontat Chantrachirathumrong
+ */
 module.exports = {
     /**
-     * @class
-     * @param {*} expressApp 
-     * @param {*} path_prefix 
-     * @param {*} model_object 
-     * @param {*} controller 
-     * @param {object} settings 
+     * For create route with input configuration.
+     * 
+     * @memberof RouteUtils
+     * 
+     * @param {Object} expressApp express app
+     * @param {string} path_prefix prefix of the path (normally should be `/api/vx/` where x is version number)
+     * @param {DefaultController} controller Default controller or subclass of it
+     * @param {Object} settings route setting
      * @param {string[]} settings.action allow action
-     * @param {object} settings.fixture fixture setting
+     * @param {Object} settings.fixture fixture setting
      * @param {boolean} settings.fixture.load auto load fixture in this model?
      * @param {boolean} settings.fixture.clear do we need to clear row in table?
+     * @param {Object[]} settings.customs array of object for create new path that not default action of DefaultController
+     * @param {string} settings.customs.name action name, can be anything.
+     * @param {string} settings.customs.type default type, accept get, list, create, update, delete. By method will get path and http-method from those type.
+     * @param {string} settings.customs.method define method name in subclass of controller. Must be defined.
+     * @param {string} settings.customs.path postfix of path after getting path from type
      * 
+     * @example Route.create(app, "/api", new Controller(), {
+     *      fixture: {
+     *          load: true,
+     *          clear: true
+     *      }
+     * })
+     *
+     * @version 0.3.0
+     * @author Kamontat Chantrachirathumrong
      */
     create: async (expressApp, path_prefix, controller, settings = {}) => {
         const LoggerUtil = require("../settings").api.l.util;
@@ -90,6 +117,23 @@ module.exports = {
         });
     },
 
+
+    /**
+     * For create default route.
+     * Path exist: 
+     *      / => get empty string path
+     *      /version => get version path
+     * 
+     * @memberof RouteUtils
+     * @param {Object} expressApp express app
+     * @param {Object} responseUtil response util from {@link ./app/apis/response.js}
+     * @param {Object} Logger logger util from {@link ./app/apis/custom_logger.js}
+     * 
+     * @example Route.default(app, require("./app/apis/response"), require("./app/apis/custom_logger"))
+     * 
+     * @version 0.3.0
+     * @author Kamontat Chantrachirathumrong
+     */
     default: (expressApp, responseUtil, Logger) => {
         Logger.log("info", {
             "title": "GET-EMPTY",
@@ -104,7 +148,7 @@ module.exports = {
             "url": "/version"
         });
         expressApp.get("/version", (req, res) => {
-            const app_setting = require("./settings").app_setting;
+            const app_setting = require("../settings").app_setting;
             responseUtil.set_200(res, app_setting.version);
         });
     }

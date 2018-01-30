@@ -5,7 +5,6 @@ const env = process.env.NODE_ENV || "development";
 const prefix = "/api";
 const version = "/v2";
 
-
 module.exports = {
     root: dirname,
     api: {

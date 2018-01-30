@@ -3,8 +3,8 @@
  * 
  * @name ServerSetting
  * 
- * @param {object} expressApp express app
- * @param {object} Logger logger for log
+ * @param {Object} expressApp express app
+ * @param {Object} Logger logger for log
  * 
  * @version 0.3.0
  * @author Kamontat Chantrachirathumrong

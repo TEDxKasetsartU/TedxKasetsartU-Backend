@@ -18,9 +18,9 @@
     "cov": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "cov:check": "nyc check-coverage --lines 70 --functions 70 --statements 70 --branches 70",
     "lint": "eslint app tests",
-    "lint:doc": "documentation lint app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js",
-    "build:doc": "documentation build app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js -f html -o documents/docs",
-    "build:doc:watch": "documentation serve app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js",
+    "lint:doc": "documentation lint app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js app/settings/**/*.js",
+    "build:doc": "documentation build app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js app/settings/**/*.js -f html -o documents/docs",
+    "build:doc:watch": "documentation serve app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js app/settings/**/*.js",
     "build:apidoc": "apidoc -i app -o documents/apidocs",
     "build:doc:all": "npm run build:doc && npm run build:apidoc",
     "ci:test": "NODE_ENV=citest nyc npm run test:mocha --verbose -- --reporter mocha-junit-reporter",
@@ -31,7 +31,8 @@
     "monitor:show": "pm2 show rdf-server",
     "monitor:restart": "pm2 restart rdf-server",
     "monitor:delete": "pm2 delete rdf-server",
-    "monitor:log": "pm2 logs rdf-server"
+    "monitor:log": "pm2 logs rdf-server",
+    "deploy:doc": "npm run lint:doc && npm run build:gh"
   },
   "repository": {
     "type": "git",

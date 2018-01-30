@@ -10,7 +10,7 @@ const config = require(`${__dirname}/../config/config.json`)[env];
 /** 
  * database model
  * @name Models
- * @namespace {object} Models
+ * @namespace {Object} Models
 */
 const db = {};
 

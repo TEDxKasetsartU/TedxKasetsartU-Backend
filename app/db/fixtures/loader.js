@@ -1,9 +1,10 @@
 /**
  * auto run fixture load from db/fixtures/index
+ * 
  * @param {Model} model model object from models folder
- * @param {Object} fixtures object of fixture list
- * @param {json[]} fixtures.json json of column to create
- * @param {function[]} fixtures.js js fixture generator, This method should return Promise<null> and accept none parameter
+ * 
+ * @author Kamontat Chantrachirathumrong
+ * @version 0.2.0
  */
 module.exports = async (model) => {
     const settings = require("../../settings");
