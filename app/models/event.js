@@ -23,10 +23,11 @@ const Types = require("mongoose").Schema.Types;
 const EventModel = new DefaultModel("Event", {
     year: {
         type: Number,
-        unique: true,
-        index: true,
-        required: [true, "Event year is required"]
+        // unique: true,
+        // index: true,
+        // required: [true, "Event year is required"]
     },
+    // FIXME: should be start date time - end date time
     datetime: {
         type: Date
     },

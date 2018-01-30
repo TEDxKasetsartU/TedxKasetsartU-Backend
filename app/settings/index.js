@@ -4,6 +4,8 @@ const dirname = path.resolve(__dirname, "../..");
 const env = process.env.NODE_ENV || "development";
 const prefix = "/api";
 const version = "/v2";
+
+
 module.exports = {
     root: dirname,
     api: {
@@ -23,7 +25,7 @@ module.exports = {
         object: require(dirname + "/app/routes/default")
     },
     docs: {
-        m: require(dirname + "/app/apidocs/member.docs.js"),
+        m: require(dirname + "/app/apidocs/event.docs.js"),
     },
     config: require(dirname + "/app/config/config.json"),
     app_setting: require(dirname + "/package.json"),

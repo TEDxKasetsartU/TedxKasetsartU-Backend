@@ -1,6 +1,18 @@
-module.exports = (expressApp, responseUtil, Logger) => {
+/**
+ * config file for setting express application
+ * 
+ * @name ServerSetting
+ * 
+ * @param {object} expressApp express app
+ * @param {object} Logger logger for log
+ * 
+ * @version 0.3.0
+ * @author Kamontat Chantrachirathumrong
+ */
+module.exports = (expressApp, Logger) => {
     const morgan = require("morgan");
     const bodyParser = require("body-parser");
+    const session = require("express-session");
 
     // const uuid = require("uuid/v1");
     // morgan.token("id", function getId(req) {
@@ -30,20 +42,14 @@ module.exports = (expressApp, responseUtil, Logger) => {
         extended: false
     }));
 
-    Logger.log("info", {
-        "title": "GET-EMPTY",
-        "url": "/"
-    });
-    expressApp.get("/", (req, res) => {
-        responseUtil.set_200(res, "Empty page, learn more on document");
-    });
-
-    Logger.log("info", {
-        "title": "GET-VERSION",
-        "url": "/version"
-    });
-    expressApp.get("/version", (req, res) => {
-        const app_setting = require("./settings").app_setting;
-        responseUtil.set_200(res, app_setting.version);
-    });
+    // app.set("trust proxy", 1); // trust first proxy
+    expressApp.use(session({
+        secret: "something",
+        resave: false,
+        saveUninitialized: true,
+        cookie: {
+            secure: true,
+            maxAge: 10 * 60 * 100 // 10 minutes | 600,000 ms
+        }
+    }));
 };

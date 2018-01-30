@@ -88,5 +88,24 @@ module.exports = {
                 return controller[element](req, res);
             });
         });
+    },
+
+    default: (expressApp, responseUtil, Logger) => {
+        Logger.log("info", {
+            "title": "GET-EMPTY",
+            "url": "/"
+        });
+        expressApp.get("/", (req, res) => {
+            responseUtil.set_200(res, "Empty page, learn more on document");
+        });
+
+        Logger.log("info", {
+            "title": "GET-VERSION",
+            "url": "/version"
+        });
+        expressApp.get("/version", (req, res) => {
+            const app_setting = require("./settings").app_setting;
+            responseUtil.set_200(res, app_setting.version);
+        });
     }
 };

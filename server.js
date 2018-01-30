@@ -12,11 +12,11 @@ const port = server_info.port;
 const server_setting = server_info.setting;
 
 const app = express();
-
-server_setting(app, responseUtil, Logger);
+server_setting(app, Logger);
 
 const Route = setting.route.object;
 
+Route.default(app, responseUtil, Logger);
 Route.create(app, server_info.path, new setting.controller.event(setting.model.event), {
     fixture: {
         load: true,
