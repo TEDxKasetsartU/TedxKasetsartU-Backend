@@ -12,30 +12,20 @@ const {
 const chalk = require("chalk");
 
 const defaultFormat = (info) => {
-    let header = chalk `{blue ${info.timestamp}} {blueBright [${info.label}]} ${info.level}: `;
+    const setting = require("../settings");
 
-    if (typeof info.message == "string") {
+    let header = chalk `{blue ${info.timestamp}} {blueBright [${info.label}-${setting.env}]} ${info.level}: `;
+
+    if (typeof info.message == "string")
         header += `${info.message}`;
-    }
-    if (info.message.title) {
+    if (info.message.title)
         header += chalk `{red.bold ${info.message.title}}`;
-    }
     if (info.message.url) {
-        const env = process.env.NODE_ENV || "development";
-        let prefix = "http://localhost:3000";
-
-        if (env == "development") {
-            prefix = "http://localhost:3000";
-        } else if (env == "citest" || env == "test") {
-            prefix = "http://localhost:3000";
-        } else {
-            prefix = "https://tedxku-backend.herokuapp.com";
-        }
-        header += chalk ` {green.underline ${prefix}${info.message.url}}`;
+        let url = (setting.env === "production") ? setting.server.url : setting.server.url + ":" + setting.server.port;
+        header += chalk ` {green.underline ${url}${info.message.url}}`;
     }
-    if (info.message.message) {
+    if (info.message.message)
         header += chalk ` {blue ${info.message.message}}`;
-    }
 
     return header;
 };
@@ -54,7 +44,17 @@ const logger = createLogger({
     transports: [new transports.Console()]
 });
 
+const show_api_path = (action, url) => {
+    logger.log("info", {
+        "title": action,
+        "url": url
+    });
+};
+
 module.exports = {
     logger,
-    defaultFormat
+    defaultFormat,
+    util: {
+        show_api_path: show_api_path
+    }
 };
