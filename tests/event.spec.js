@@ -43,19 +43,18 @@ async function fixture_loader(model_name) {
 
 //Our parent block
 describe("Events", () => {
-    before(() => {
+    before((done) => {
         this.server = require("../server");
+        done();
         // await settings.model.event.clear_db();
     });
 
     describe("/GET event", () => {
         before(() => {
-            setTimeout(async () => {
-                await fixture_loader("event");
-            }, 600000);
+            return fixture_loader("event");
         });
 
-        it("it should GET all the events", async () => {
+        it("it should GET all the events", () => {
             return chai.request(this.server)
                 .get("/api/v2/events")
                 .then((res) => {
@@ -67,13 +66,15 @@ describe("Events", () => {
 
         it("it should GET 1 exist event", async () => {
             const event = await randomEvent();
-            const res = await chai.request(this.server).get("/api/v2/event/" + event[0].id);
+            if (event) {
+                const res = await chai.request(this.server).get("/api/v2/event/" + event[0].id);
 
-            expect(res.body.complete).to.be.true;
-            expect(res).to.have.status(200);
+                expect(res.body.complete).to.be.true;
+                expect(res).to.have.status(200);
+            }
         });
 
-        it("it shouldn't GET no-exist event", async () => {
+        it("it shouldn't GET no-exist event", () => {
             return chai.request(this.server)
                 .get("/api/v2/event/xxyyzz")
                 .catch(err => {
@@ -85,12 +86,10 @@ describe("Events", () => {
 
     describe("/GET event year", () => {
         before(() => {
-            setTimeout(async () => {
-                await fixture_loader("event");
-            }, 600000);
+            return fixture_loader("event");
         });
 
-        it("it should GET list all year available", async () => {
+        it("it should GET list all year available", () => {
             return chai.request(this.server)
                 .get("/api/v2/events/years")
                 .then((res) => {
