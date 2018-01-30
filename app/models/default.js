@@ -61,6 +61,14 @@ class DefaultModel {
         this.n = name;
     }
 
+    is_connected() {
+        return new Promise((res, rej) => {
+            const db = this.mongoose.connection;
+            db.on("error", rej);
+            db.once("open", res);
+        });
+    }
+
     /**
      * @constructor
      */
@@ -71,6 +79,7 @@ class DefaultModel {
         this.schema = new this.mongoose.Schema(database_columns, database_options);
         if (this._is_testing())
             this.schema.plugin(require("mongoose-simple-random"));
+
         try {
             this.model = this.mongoose.model(database_name, this.schema);
         } catch (err) {

@@ -11,7 +11,7 @@ const config = require(`${__dirname}/../config/config.json`)[env];
  * database model
  * @name Models
  * @namespace {Object} Models
-*/
+ */
 const db = {};
 
 if (config.use_env_variable) {

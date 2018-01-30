@@ -4,7 +4,7 @@ const random = (min = 1, max = 20) => {
 
 const query = (model, size) => {
     return new Promise((res, rej) => {
-        const models = require("../../../models");
+        const models = require("../../../settings").model;
         models[model].random({}, {
             "_id": 1
         }, {
@@ -18,7 +18,8 @@ const query = (model, size) => {
 };
 
 module.exports = () => {
-    const event = require("../../../models").event;
+    const models = require("../../../settings").model;
+    const event = models.event;
     const eventjson = require("./event-test.json");
 
     let promises = [];
