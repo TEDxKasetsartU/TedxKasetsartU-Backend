@@ -31,7 +31,9 @@ module.exports = () => {
             element.banners = await query("banner", random(10, 30));
             promises.push(event.create(element));
         } catch (err) {
-            console.error(err.message);
+            promises.push(new Promise((res, rej) => {
+                rej(err);
+            }));
         }
     });
     return Promise.all(promises);
