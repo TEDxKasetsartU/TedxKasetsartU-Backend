@@ -92,13 +92,13 @@ module.exports = (expressApp, route_settings, settings = []) => {
             };
         }
 
-        if (setting.functions) params["functions"] = setting.functions;
-        if (setting.model.clear) creators.push(model.clear_db());
+        // if (setting.functions) params["functions"] = setting.functions;
+        // if (setting.model.clear) creators.push(model.clear_db());
 
-        creators.push(choose_fixture_to_load(model, fixture, route_settings.fixtures).then(() => {
-            const default_route = new DefRoute(expressApp, model, params);
-            return default_route.exec();
-        }));
+        // creators.push(choose_fixture_to_load(model, fixture, route_settings.fixtures).then(() => {
+        //     const default_route = new DefRoute(expressApp, model, params);
+        //     return default_route.exec();
+        // }));
     });
 
     return Promise.all(creators);

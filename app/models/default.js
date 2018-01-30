@@ -1,26 +1,16 @@
 const errors = require("restify-error");
 
 /**
- * create mongo schema and model, 
- * More {@link http://mongoosejs.com/docs/guide.html#options|mongoosejs}
+ * create firebase schema and model.
  * @class
  * 
- * @param {string} database_name database name
- * @param {Object} database_columns column inside database
- * @param {Object} database_options option of Schema creator 
+ * @param {string} table_name should be table name
+ * @param {Object} column column inside table
  * 
  * @author Kamontat Chantrachirathumrong
  * @version 0.2.0-beta.3
  */
 class DefaultModel {
-    /**
-     * mongoose instance
-     * @static
-     *  @returns {Object} mongooes
-     */
-    get mongoose() {
-        return require("mongoose");
-    }
 
     /**
      * default limit of list model
@@ -57,16 +47,59 @@ class DefaultModel {
     }
 
     /**
+     * @private
+     * @param {string} name table name
+     */
+    _get_table(name) {
+        return this.database.collection(name);
+    }
+
+    /**
+     * add data to table as `table_name`
+     * @private
+     * @param {string} table_name table name
+     * @param {string} id data id
+     * @param {object} column object of column inside table
+     */
+    _add_data(table_name, id, column) {
+        return this._get_table(table_name).doc(id).set(column);
+    }
+
+    /** 
+     * @private
+     */
+    _setup_firebase() {
+        const admin = require("firebase-admin");
+        if (!admin.apps.length) {
+            this.app = admin.initializeApp({
+                credential: admin.credential.cert(require("../db/config/tedxkasetsartu2018-adminkey.json")),
+                databaseURL: "https://tedxku-2018.firebaseio.com"
+            });
+        } else {
+            this.app = admin.apps[0];
+        }
+        return this.app;
+    }
+
+    /**
      * @constructor
      */
-    constructor(database_name, database_columns, database_options) {
+    constructor(table_name, column) {
         this.env = process.env.NODE_ENV || "development";
 
-        this.name = database_name;
-        this.schema = new this.mongoose.Schema(database_columns, database_options);
-        if (this._is_testing())
-            this.schema.plugin(require("mongoose-simple-random"));
-        this.model = this.mongoose.model(database_name, this.schema);
+        this.name = table_name;
+        this.table_column = column;
+        this.database = this._setup_firebase().firestore();
+
+        this._add_data(this.name, "alkdfj", {
+            name: "Los Angeles",
+            state: "CA",
+            country: "USA"
+        }).then(function () {
+            console.log("Document successfully written!");
+        }).catch(function (error) {
+            console.error("Error writing document: ", error);
+        });
     }
 
     /** 

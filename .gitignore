@@ -114,9 +114,11 @@ tags
 ### Database ###
 app/db/db
 app/db/logs
-!app/db/config
+
+app/db/config/tedxkasetsartu2018-adminkey.json
 !app/db/fixtures
 !app/db/scripts
+
 
 ### Test ###
 test-results.xml

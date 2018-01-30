@@ -1,5 +1,7 @@
 # TEDxKasetsart-Backend [![license](https://img.shields.io/github/license/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://github.com/TEDxKasetsartU/TedxKasetsartU-Backend)
 
+YOU NEED TO HAVE `app/db/config/tedxkasetsartu2018-adminkey.json` for authentication. GET IN <https://console.firebase.google.com/u/1/project/tedxku-2018/settings/serviceaccounts/adminsdk>
+
 ## Badge
 
 | Badge | Description |
