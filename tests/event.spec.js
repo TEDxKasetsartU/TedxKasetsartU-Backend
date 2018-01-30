@@ -17,7 +17,7 @@ function randomEvent() {
     });
 }
 
-process.env.PORT = getRandomInt(5000, 40000);
+process.env.PORT = getRandomInt(8000, 8100);
 
 const settings = require("../app/settings");
 
