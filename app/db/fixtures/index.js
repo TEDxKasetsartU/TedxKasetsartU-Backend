@@ -3,11 +3,10 @@ const env = process.env.NODE_ENV || "development";
 
 
 let folder = "";
-if (env == "development" || env == "test" || env == "citest") {
-    folder = "/mock";
-} else {
+if (env == "production" || env == "prod")
     folder = "/real";
-}
+else
+    folder = "/mock";
 
 // get mock data from https://www.mockaroo.com
 

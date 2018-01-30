@@ -1,4 +1,5 @@
 const errors = require("restify-error");
+const Promise = require("bluebird");
 
 /**
  * create mongo schema and model, 
@@ -48,6 +49,10 @@ class DefaultModel {
         return this.n.toLowerCase();
     }
 
+    get plural_name() {
+        return this.n.toLowerCase() + "s";
+    }
+
     /**
      * setter of model name
      * @param {string} name new name
@@ -66,7 +71,11 @@ class DefaultModel {
         this.schema = new this.mongoose.Schema(database_columns, database_options);
         if (this._is_testing())
             this.schema.plugin(require("mongoose-simple-random"));
-        this.model = this.mongoose.model(database_name, this.schema);
+        try {
+            this.model = this.mongoose.model(database_name, this.schema);
+        } catch (err) {
+            this.model = this.mongoose.model(database_name);
+        }
     }
 
     /** 
@@ -100,12 +109,15 @@ class DefaultModel {
      * @param {Object} option.filter filter result, must be JSON which key is same as column
      * @returns {Promise<Model[]>} promise of list of mongo model
      */
-    list(next, option) {
+    list(next, option = {}) {
         let limit = this.DEFAULT_LIMIT;
         let filter = {};
-        if (option && option.default_limit) limit = Number(option.default_limit);
-        if (option && option.filter) filter = option.filter;
-        return this.model.find(filter, null, {
+        let only = null;
+        if (option.default_limit) limit = Number(option.default_limit);
+        if (option.filter) filter = option.filter;
+        if (option.only) only = option.only;
+
+        return this.model.find(filter, only, {
             "limit": limit,
             "skip": next * limit
         }).exec();

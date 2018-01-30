@@ -1,6 +1,6 @@
 {
   "name": "tedxku-backend",
-  "version": "0.2.1-0",
+  "version": "0.3.0",
   "description": "backend api for tedxku server",
   "main": "server.js",
   "scripts": {
@@ -13,7 +13,7 @@
     "start:db:watch": "mongod --config ./app/db/config/mongod.conf",
     "start:prod": "NODE_ENV=production npm run start",
     "test:mocha": "mocha --timeout 10000 --colors --exit ./tests/**/*.spec.js",
-    "test": "NODE_ENV=test npm run test:mocha",
+    "test": "NODE_ENV=test npm run test:mocha --",
     "test:watch": "NODE_ENV=test npm test -- --watch",
     "cov": "nyc npm test && nyc report --reporter=text-lcov | coveralls",
     "cov:check": "nyc check-coverage --lines 70 --functions 70 --statements 70 --branches 70",
