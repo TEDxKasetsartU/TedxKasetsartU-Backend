@@ -63,7 +63,7 @@ class DefaultModel {
 
     static is_connected() {
         return new Promise((res, rej) => {
-            const db = this.mongoose.connection;
+            const db = require("mongoose").connection;
             db.on("error", rej);
             db.once("open", res);
         });
