@@ -57,20 +57,21 @@ module.exports = {
             return actions;
         };
 
-        const clear_data = (flag) => {
-            if (flag) controller.model.clear_db();
+        const clear_data = async (flag) => {
+            // console.log(flag);
+            if (flag) await controller.model.clear_db();
         };
 
-        const load_data = (flag) => {
+        const load_data = async (flag) => {
             const loader = require("../settings").database.loader;
-            if (flag) loader(controller.model);
+            if (flag) await loader(controller.model);
         };
 
         let action = set_allow_action(settings.action);
         let setting = {};
 
-        clear_data(settings.fixture.clear);
-        load_data(settings.fixture.load);
+        await clear_data(settings.fixture.clear);
+        await load_data(settings.fixture.load);
 
         // GET 1 model
         if (action.get)

@@ -221,11 +221,26 @@ class DefaultModel {
         });
     }
 
+    randomOne() {
+        if (!this._is_testing()) return new Promise((res) => {
+            res();
+        });
+
+        return new Promise((res, rej) => {
+            return this.model.findOneRandom((err, result) => {
+                if (err) rej(new errors.NotFoundError("Cannot random, try again"));
+                if (!result) rej(new errors.NotFoundError("Cannot random, try again"));
+                else res(result);
+            });
+        });
+    }
+
     /** 
      * clear all row this model (Table)
      * @returns {Promise<null>} promise of null
      */
     clear_db() {
+        console.log("CLEAR DATABASE!!??");
         return this.delete_by_condition({});
     }
 }

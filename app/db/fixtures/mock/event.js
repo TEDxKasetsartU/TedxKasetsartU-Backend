@@ -25,16 +25,14 @@ module.exports = () => {
 
     eventjson.forEach(async element => {
         try {
-            // await event.clear_db();
             element.locations = await query("location", random(1, 5));
-            element.speakers = await query("speaker", random(10, 20));
-            element.members = await query("member", random(20, 30));
-            element.banners = await query("banner", random(30, 100));
-            await event.create(element);
+            element.speakers = await query("speaker", random(5, 10));
+            element.members = await query("member", random(10, 20));
+            element.banners = await query("banner", random(10, 30));
+            promises.push(event.create(element));
         } catch (err) {
             console.error(err.message);
         }
     });
-
     return Promise.all(promises);
 };

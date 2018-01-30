@@ -20,7 +20,7 @@ Route.default(app, responseUtil, Logger);
 Route.create(app, server_info.path, new setting.controller.event(setting.model.event), {
     fixture: {
         load: true,
-        clear: true
+        clear: env === "develop" || env === "development" || env === "prod" || env === "production"
     },
     action: ["get", "list"],
     customs: [{
