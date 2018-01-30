@@ -1,3 +1,29 @@
+const morgan_callback = (Logger) => {
+    return (tokens, req, res) => {
+        // const id = req.id;
+        const method = tokens.method(req, res);
+        const url = tokens.url(req, res);
+        const status = tokens.status(req, res);
+        // const content_length = tokens.res(req, res, "content-length");
+        const res_time = tokens["response-time"](req, res);
+        Logger.log("info", {
+            "title": method,
+            "message": `(${status}) - ${res_time} ms`,
+            "url": url
+        });
+    };
+};
+
+const session_setting = {
+    secret: "something",
+    resave: false,
+    saveUninitialized: true,
+    cookie: {
+        secure: true,
+        maxAge: 10 * 60 * 100 // 10 minutes | 600,000 ms
+    }
+};
+
 /**
  * config file for setting express application
  * 
@@ -23,33 +49,13 @@ module.exports = (expressApp, Logger) => {
     //     next();
     // });
 
-    expressApp.use(morgan((tokens, req, res) => {
-        // const id = req.id;
-        const method = tokens.method(req, res);
-        const url = tokens.url(req, res);
-        const status = tokens.status(req, res);
-        // const content_length = tokens.res(req, res, "content-length");
-        const res_time = tokens["response-time"](req, res);
-        Logger.log("info", {
-            "title": method,
-            "message": `(${status}) - ${res_time} ms`,
-            "url": url
-        });
-    }));
+    expressApp.use(morgan(morgan_callback(Logger)));
 
-    expressApp.use(bodyParser.json());
-    expressApp.use(bodyParser.urlencoded({
-        extended: false
-    }));
+    expressApp.use(bodyParser.json()); // for parse 'application/json'
+    // expressApp.use(bodyParser.urlencoded({
+    // extended: false
+    // })); // for parse 'application/x-www-form-urlencoded'
 
-    // app.set("trust proxy", 1); // trust first proxy
-    expressApp.use(session({
-        secret: "something",
-        resave: false,
-        saveUninitialized: true,
-        cookie: {
-            secure: true,
-            maxAge: 10 * 60 * 100 // 10 minutes | 600,000 ms
-        }
-    }));
+    expressApp.set("trust proxy", 1); // trust first proxy
+    expressApp.use(session(session_setting));
 };

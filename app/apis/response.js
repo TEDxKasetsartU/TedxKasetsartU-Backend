@@ -5,15 +5,15 @@ const get_res = (complete, msg) => {
     let json = {
         "complete": complete
     };
-
     if (msg instanceof Error && !(msg instanceof errors.HttpError))
         msg = serializeError(msg);
-
-    if (!complete) {
-        if (msg) json["message"] = msg;
-    } else {
-        if (msg) json["result"] = msg;
+    if (msg) {
+        if (!complete)
+            json.message = msg;
+        else
+            json.result = msg;
     }
+
     return json;
 };
 

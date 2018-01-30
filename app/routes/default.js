@@ -41,7 +41,6 @@ module.exports = {
      */
     create: async (expressApp, path_prefix, controller, settings = {}) => {
         const LoggerUtil = require("../settings").api.l.util;
-        const loader = require("../settings").database.loader;
 
         const set_allow_action = (allows) => {
             let actions = {
@@ -58,10 +57,20 @@ module.exports = {
             return actions;
         };
 
+        const clear_data = (flag) => {
+            if (flag) controller.model.clear_db();
+        };
+
+        const load_data = (flag) => {
+            const loader = require("../settings").database.loader;
+            if (flag) loader(controller.model);
+        };
+
         let action = set_allow_action(settings.action);
         let setting = {};
-        if (settings.fixture.clear) controller.model.clear_db();
-        if (settings.fixture.load) loader(controller.model);
+
+        clear_data(settings.fixture.clear);
+        load_data(settings.fixture.load);
 
         // GET 1 model
         if (action.get)
@@ -98,14 +107,13 @@ module.exports = {
                 path: path_prefix + controller.model_lower_name + "/:id"
             };
 
-        if (settings.customs) {
+        if (settings.customs)
             settings.customs.forEach(element => {
                 setting[element.method] = {
                     method: setting[element.type].method,
                     path: setting[element.type].path + element.path
                 };
             });
-        }
 
         Object.keys(setting).forEach(element => {
             let s = setting[element];

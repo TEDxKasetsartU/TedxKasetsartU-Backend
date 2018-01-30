@@ -18,37 +18,22 @@ const query = (model, size) => {
 };
 
 module.exports = () => {
+    const event = require("../../../models").event;
     const eventjson = require("./event-test.json");
 
     let promises = [];
 
-    eventjson.forEach(element => {
-        promises.push(query("location", random())
-            .then(result => {
-                element.locations = result;
-                return query("speaker", random());
-            }).then(result => {
-                element.speakers = result;
-                return query("member", random());
-            }).then(result => {
-                element.members = result;
-                return query("banner", random());
-            }).then(result => {
-                element.banners = result;
-                return new Promise((res) => res(element));
-            }).then(result => {
-                return new Promise((res, rej) => {
-                    return require("../../../models").event.clear_db().then(() => {
-                        return res(result);
-                    }).catch(err => {
-                        rej(err);
-                    });
-                });
-            }).then(result => {
-                return require("../../../models").event.create(result);
-            }).catch(err => {
-                console.error(err);
-            }));
+    eventjson.forEach(async element => {
+        try {
+            // await event.clear_db();
+            element.locations = await query("location", random(1, 5));
+            element.speakers = await query("speaker", random(10, 20));
+            element.members = await query("member", random(20, 30));
+            element.banners = await query("banner", random(30, 100));
+            await event.create(element);
+        } catch (err) {
+            console.error(err.message);
+        }
     });
 
     return Promise.all(promises);

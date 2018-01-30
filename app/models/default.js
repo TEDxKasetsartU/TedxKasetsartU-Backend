@@ -132,7 +132,7 @@ class DefaultModel {
         return new Promise((res, rej) => {
             return this.model.findById(id)
                 .exec().then((result) => {
-                    if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
+                    if (!result) rej(new errors.NotFoundError("Cannot get id " + id + " is not exist."));
                     res(result);
                 }).catch((err) => {
                     rej(err);
@@ -154,7 +154,7 @@ class DefaultModel {
             return this.model.findByIdAndUpdate(id, body, {
                 "new": true
             }).exec().then((result) => {
-                if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
+                if (!result) rej(new errors.NotFoundError("Cannot update id " + id + " is not exist"));
                 res(result);
             }).catch((err) => {
                 rej(err);
@@ -215,7 +215,8 @@ class DefaultModel {
             return this.model.findRandom(filter, fields, options, function (err, results) {
                 if (err)
                     return rej(err);
-                return res(results);
+                if (!results) rej(new errors.NotFoundError("Cannot random, try again"));
+                else res(results);
             });
         });
     }
