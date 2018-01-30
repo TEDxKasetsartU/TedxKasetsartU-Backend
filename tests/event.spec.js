@@ -13,11 +13,13 @@ function getRandomInt(min, max) {
 async function randomEvent() {
     let event = null;
 
+    /* eslint-disable no-empty */
     while (!event) {
         try {
             event = await settings.model.event.random();
         } catch (err) {}
     }
+    /* eslint-enable no-empty */
 
     return event;
 }
