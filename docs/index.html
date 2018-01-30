@@ -2,7 +2,7 @@
 <html>
 <head>
   <meta charset='utf-8' />
-  <title>tedxku-backend 0.2.0 | Documentation</title>
+  <title>tedxku-backend 0.3.0 | Documentation</title>
   <meta name='viewport' content='width=device-width,initial-scale=1'>
   <link href='assets/bass.css' type='text/css' rel='stylesheet' />
   <link href='assets/style.css' type='text/css' rel='stylesheet' />
@@ -14,7 +14,7 @@
       <div id='split-left' class='overflow-auto fs0 height-viewport-100'>
         <div class='py1 px2'>
           <h3 class='mb0 no-anchor'>tedxku-backend</h3>
-          <div class='mb1'><code>0.2.0</code></div>
+          <div class='mb1'><code>0.3.0</code></div>
           <input
             placeholder='Filter'
             id='filter-input'
@@ -28,6 +28,16 @@
                   href='#defaultcontroller'
                   class="">
                   DefaultController
+                  
+                </a>
+                
+                </li>
+              
+                
+                <li><a
+                  href='#loader'
+                  class="">
+                  loader
                   
                 </a>
                 
@@ -193,67 +203,31 @@
               
                 
                 <li><a
-                  href='#defaultroute'
+                  href='#routeutils'
                   class=" toggle-sibling">
-                  DefaultRoute
+                  RouteUtils
                   <span class='icon'>▸</span>
                 </a>
                 
                 <div class='toggle-target display-none'>
                   
-                  
-                    <ul class='list-reset py1-ul pl1'>
-                      <li class='h5'><span>Instance members</span></li>
-                      
+                  <ul class='list-reset py1-ul pl1'>
+                    <li class='h5'><span>Static members</span></li>
+                    
                       <li><a
-                        href='#defaultrouteget_custom_path'
+                        href='#routeutilscreate'
                         class='regular pre-open'>
-                        #get_custom_path
+                        .create
                       </a></li>
-                      
+                    
                       <li><a
-                        href='#defaultrouteexec'
+                        href='#routeutilsdefault'
                         class='regular pre-open'>
-                        #exec
+                        .default
                       </a></li>
-                      
-                      <li><a
-                        href='#defaultroutedefault_get'
-                        class='regular pre-open'>
-                        #default_get
-                      </a></li>
-                      
-                      <li><a
-                        href='#defaultrouteget_list'
-                        class='regular pre-open'>
-                        #get_list
-                      </a></li>
-                      
-                      <li><a
-                        href='#defaultrouteget_retrieve'
-                        class='regular pre-open'>
-                        #get_retrieve
-                      </a></li>
-                      
-                      <li><a
-                        href='#defaultroutepost_create'
-                        class='regular pre-open'>
-                        #post_create
-                      </a></li>
-                      
-                      <li><a
-                        href='#defaultrouteput_update'
-                        class='regular pre-open'>
-                        #put_update
-                      </a></li>
-                      
-                      <li><a
-                        href='#defaultroutedelete_destroy'
-                        class='regular pre-open'>
-                        #delete_destroy
-                      </a></li>
-                      
+                    
                     </ul>
+                  
                   
                   
                   
@@ -263,39 +237,9 @@
               
                 
                 <li><a
-                  href='#route_index'
+                  href='#serversetting'
                   class="">
-                  route_index
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#_auto_load_fixture'
-                  class="">
-                  _auto_load_fixture
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#choose_fixture_to_load'
-                  class="">
-                  choose_fixture_to_load
-                  
-                </a>
-                
-                </li>
-              
-                
-                <li><a
-                  href='#_load_fixture'
-                  class="">
-                  _load_fixture
+                  ServerSetting
                   
                 </a>
                 
@@ -326,7 +270,7 @@
 
   
 
-  <div class='pre p1 fill-light mt0'>new DefaultController(model: any, options: any)</div>
+  <div class='pre p1 fill-light mt0'>new DefaultController(model: any, functions: any)</div>
   
   
 
@@ -351,9 +295,70 @@
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>options</span> <code class='quiet'>(any
-            = <code>{}</code>)</code>
+            <span class='code bold'>functions</span> <code class='quiet'>(any
+            = <code>[]</code>)</code>
 	    
+          </div>
+          
+        </div>
+      
+    </div>
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+
+  
+</section>
+
+          
+        
+          
+            <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+  <div class='clearfix'>
+    
+    <h3 class='fl m0' id='loader'>
+      loader
+    </h3>
+    
+    
+  </div>
+  
+
+  <p>auto run fixture load from db/fixtures/index</p>
+
+
+  <div class='pre p1 fill-light mt0'>loader(model: Model)</div>
+  
+  
+
+  
+  <div>Version: 0.2.0</div>
+  
+  <div>Author: Kamontat Chantrachirathumrong</div>
+  
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Parameters</div>
+    <div class='prose'>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>model</span> <code class='quiet'>(Model)</code>
+	    model object from models folder
+
           </div>
           
         </div>
@@ -399,7 +404,7 @@
   
     <p>
       Type:
-      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">object</a>
+      <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
     </p>
   
   
@@ -1388,7 +1393,8 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>option</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+            <span class='code bold'>option</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            = <code>{}</code>)</code>
 	    option for list
 
           </div>
@@ -1993,23 +1999,83 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='defaultroute'>
-      DefaultRoute
+    <h3 class='fl m0' id='routeutils'>
+      RouteUtils
     </h3>
     
     
   </div>
   
 
-  <p>Default routing object. This class use for auto create route in get/post/put/delete of the database</p>
+  <p>This is object of utils function for manage about route in application.</p>
 
 
-  <div class='pre p1 fill-light mt0'>new DefaultRoute(expressApp: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, model: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, parameter: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  <div class='pre p1 fill-light mt0'>RouteUtils</div>
   
   
 
   
-  <div>Version: 0.2.0-beta.3</div>
+  <div>Version: 0.3.0</div>
+  
+  <div>Author: Kamontat Chantrachirathumrong</div>
+  
+  
+
+  
+
+  
+
+  
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        object of utils function.
+
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        object.create create function, use to create new route.
+
+      
+    
+      <div class='py1 quiet mt1 prose-big'>Returns</div>
+      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>:
+        object.default default route function, use to create default route such as empty path or version path.
+
+      
+    
+  
+
+  
+
+  
+
+  
+    <div class='py1 quiet mt1 prose-big'>Static Members</div>
+    <div class="clearfix">
+  
+    <div class='border-bottom' id='routeutilscreate'>
+      <div class="clearfix small pointer toggle-sibling">
+        <div class="py1 contain">
+            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
+            <span class='code strong strong truncate'>create(expressApp, path_prefix, controller, settings)</span>
+        </div>
+      </div>
+      <div class="clearfix display-none toggle-target">
+        <section class='p2 mb2 clearfix bg-white minishadow'>
+
+  
+
+  <p>For create route with input configuration.</p>
+
+
+  <div class='pre p1 fill-light mt0'>create(expressApp: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, path_prefix: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, controller: <a href="#defaultcontroller">DefaultController</a>, settings: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
+  
+  
+
+  
+  <div>Version: 0.3.0</div>
   
   <div>Author: Kamontat Chantrachirathumrong</div>
   
@@ -2022,7 +2088,7 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>expressApp</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    express Object
+	    express app
 
           </div>
           
@@ -2030,8 +2096,10 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>model</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    database model
+            <span class='code bold'>path_prefix</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
+	    prefix of the path (normally should be 
+<code>/api/vx/</code>
+ where x is version number)
 
           </div>
           
@@ -2039,9 +2107,18 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>parameter</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
+            <span class='code bold'>controller</span> <code class='quiet'>(<a href="#defaultcontroller">DefaultController</a>)</code>
+	    Default controller or subclass of it
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>settings</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>
             = <code>{}</code>)</code>
-	    route parameters
+	    route setting
 
           </div>
           
@@ -2059,56 +2136,87 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
             <tbody class='mt1'>
               
                 <tr>
-  <td class='break-word'><span class='code bold'>parameter.default_path</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  <td class='break-word'><span class='code bold'>settings.action</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>></code>
   </td>
-  <td class='break-word'><span>prefix path
+  <td class='break-word'><span>allow action
 </span></td>
 </tr>
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>parameter.version</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  <td class='break-word'><span class='code bold'>settings.fixture</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
   </td>
-  <td class='break-word'><span>route version
+  <td class='break-word'><span>fixture setting
 </span></td>
 </tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.fixture.load</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>auto load fixture in this model?
+</span></td>
+</tr>
+
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.fixture.clear</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
+  </td>
+  <td class='break-word'><span>do we need to clear row in table?
+</span></td>
+</tr>
+
+
+  
 
 
               
                 <tr>
-  <td class='break-word'><span class='code bold'>parameter.controller</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  <td class='break-word'><span class='code bold'>settings.customs</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>></code>
   </td>
-  <td class='break-word'><span>controller Object
+  <td class='break-word'><span>array of object for create new path that not default action of DefaultController
+</span></td>
+</tr>
+
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.customs.name</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  </td>
+  <td class='break-word'><span>action name, can be anything.
 </span></td>
 </tr>
 
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>parameter.controller_options</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.customs.type</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>controller options
+  <td class='break-word'><span>default type, accept get, list, create, update, delete. By method will get path and http-method from those type.
 </span></td>
 </tr>
 
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>parameter.name</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.customs.method</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>model name (single)
+  <td class='break-word'><span>define method name in subclass of controller. Must be defined.
 </span></td>
 </tr>
 
 
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>parameter.pl_name</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
+  
+    <tr>
+  <td class='break-word'><span class='code bold'>settings.customs.path</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a></code>
   </td>
-  <td class='break-word'><span>model name (plural)
+  <td class='break-word'><span>postfix of path after getting path from type
 </span></td>
 </tr>
+
+
+  
 
 
               
@@ -2127,120 +2235,15 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
   
 
   
-
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Instance Members</div>
-    <div class="clearfix">
-  
-    <div class='border-bottom' id='defaultrouteget_custom_path'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>get_custom_path(name, custom)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>getting path by input values, include the default <code>this.path</code></p>
-
-
-  <div class='pre p1 fill-light mt0'>get_custom_path(name: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>, custom: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>name</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</code>
-	    path name, usually will be model name
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>custom</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;&quot;</code>)</code>
-	    postfix of the path
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultrouteexec'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>exec()</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>Create the route of get/post/put/delete method.</p>
-
-
-  <div class='pre p1 fill-light mt0'>exec(): <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;null></div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-
-  
-
-  
+    <div class='py1 quiet mt1 prose-big'>Example</div>
     
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;null></code>:
-        empty promise
-
       
+      <pre class='p1 overflow-auto round fill-light'>Route.create(app, <span class="hljs-string">"/api"</span>, <span class="hljs-keyword">new</span> Controller(), {
+     <span class="hljs-attr">fixture</span>: {
+         <span class="hljs-attr">load</span>: <span class="hljs-literal">true</span>,
+         <span class="hljs-attr">clear</span>: <span class="hljs-literal">true</span>
+     }
+})</pre>
     
   
 
@@ -2249,20 +2252,16 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
   
 
   
-
-  
-
-  
 </section>
 
       </div>
     </div>
   
-    <div class='border-bottom' id='defaultroutedefault_get'>
+    <div class='border-bottom' id='routeutilsdefault'>
       <div class="clearfix small pointer toggle-sibling">
         <div class="py1 contain">
             <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>default_get()</span>
+            <span class='code strong strong truncate'>default(expressApp, responseUtil, Logger)</span>
         </div>
       </div>
       <div class="clearfix display-none toggle-target">
@@ -2270,65 +2269,20 @@ More <a href="http://mongoosejs.com/docs/guide.html#options">mongoosejs</a></p>
 
   
 
-  <p>default get method which return the <code>defaultResponse</code> method from controller</p>
+  <p>For create default route.
+Path exist:
+/ => get empty string path
+/version => get version path</p>
 
 
-  <div class='pre p1 fill-light mt0'>default_get()</div>
-  
-  
-
-  
-  
-  
-  
+  <div class='pre p1 fill-light mt0'>default(expressApp: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, responseUtil: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>, Logger: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</div>
   
   
 
   
-
+  <div>Version: 0.3.0</div>
   
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultrouteget_list'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>get_list(custom)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>check is this controller able to use list method. After this checking,
-create the APIs path {GET} by <code>this.path</code> + name + version + model name in plural form.
-This using <code>list</code> method from controller</p>
-
-
-  <div class='pre p1 fill-light mt0'>get_list(custom: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
+  <div>Author: Kamontat Chantrachirathumrong</div>
   
   
 
@@ -2338,9 +2292,28 @@ This using <code>list</code> method from controller</p>
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>custom</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;&quot;</code>)</code>
-	    custom postfix path of list all model method
+            <span class='code bold'>expressApp</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    express app
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>responseUtil</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    response util from 
+<a href="./app/apis/response.js">./app/apis/response.js</a>
+
+          </div>
+          
+        </div>
+      
+        <div class='space-bottom0'>
+          <div>
+            <span class='code bold'>Logger</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    logger util from 
+<a href="./app/apis/custom_logger.js">./app/apis/custom_logger.js</a>
 
           </div>
           
@@ -2356,260 +2329,11 @@ This using <code>list</code> method from controller</p>
   
 
   
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultrouteget_retrieve'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>get_retrieve(id)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>check is this controller able to use <code>get</code> method. After checking,
-create the APIs path in {GET} method with <code>this.path</code> + name + version + model name in single form + fid
-This using <code>get</code> method from controller.
-The parameter <code>id</code> should input as <code>dynamicPath</code> in the controller.</p>
-
-
-  <div class='pre p1 fill-light mt0'>get_retrieve(id: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
+    <div class='py1 quiet mt1 prose-big'>Example</div>
+    
       
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>id</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;fid&quot;</code>)</code>
-	    the key of parameter, which will transfer from url when it called
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultroutepost_create'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>post_create(custom)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>check is this controller able to use <code>create</code> method. After this checking,
-create the APIs path {POST} by <code>this.path</code> + name + version + model name in single form.
-This using <code>create</code> method from controller</p>
-
-
-  <div class='pre p1 fill-light mt0'>post_create(custom: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>custom</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;&quot;</code>)</code>
-	    custom postfix path of create model
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultrouteput_update'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>put_update(id)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>check is this controller able to use <code>update</code> method. After checking,
-create the APIs path in {PUT} method with <code>this.path</code> + name + version + model name in single form + fid
-This using <code>update</code> method from controller.
-The parameter <code>id</code> should input as <code>dynamicPath</code> in the controller.</p>
-
-
-  <div class='pre p1 fill-light mt0'>put_update(id: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>id</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;fid&quot;</code>)</code>
-	    the key of parameter, which will transfer from url when it called
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-      </div>
-    </div>
-  
-    <div class='border-bottom' id='defaultroutedelete_destroy'>
-      <div class="clearfix small pointer toggle-sibling">
-        <div class="py1 contain">
-            <a class='icon pin-right py1 dark-link caret-right'>▸</a>
-            <span class='code strong strong truncate'>delete_destroy(id)</span>
-        </div>
-      </div>
-      <div class="clearfix display-none toggle-target">
-        <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-
-  <p>check is this controller able to use <code>delete</code> method. After checking,
-create the APIs path in {DELETE} method with <code>this.path</code> + name + version + model name in single form + fid
-This using <code>delete</code> method from controller.
-The parameter <code>id</code> should input as <code>dynamicPath</code> in the controller.</p>
-
-
-  <div class='pre p1 fill-light mt0'>delete_destroy(id: <a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>)</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>id</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/String">string</a>
-            = <code>&quot;fid&quot;</code>)</code>
-	    the key of parameter, which will transfer from url when it called
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
+      <pre class='p1 overflow-auto round fill-light'>Route.default(app, <span class="hljs-built_in">require</span>(<span class="hljs-string">"./app/apis/response"</span>), <span class="hljs-built_in">require</span>(<span class="hljs-string">"./app/apis/custom_logger"</span>))</pre>
+    
   
 
   
@@ -2627,6 +2351,8 @@ The parameter <code>id</code> should input as <code>dynamicPath</code> in the co
   
 
   
+
+  
 </section>
 
           
@@ -2637,23 +2363,23 @@ The parameter <code>id</code> should input as <code>dynamicPath</code> in the co
   
   <div class='clearfix'>
     
-    <h3 class='fl m0' id='route_index'>
-      route_index
+    <h3 class='fl m0' id='serversetting'>
+      ServerSetting
     </h3>
     
     
   </div>
   
 
-  <p>Index of creating route helper</p>
+  <p>config file for setting express application</p>
 
 
-  <div class='pre p1 fill-light mt0'>route_index</div>
+  <div class='pre p1 fill-light mt0'>ServerSetting</div>
   
   
 
   
-  <div>Version: 0.2.0-beta.3</div>
+  <div>Version: 0.3.0</div>
   
   <div>Author: Kamontat Chantrachirathumrong</div>
   
@@ -2666,7 +2392,7 @@ The parameter <code>id</code> should input as <code>dynamicPath</code> in the co
         <div class='space-bottom0'>
           <div>
             <span class='code bold'>expressApp</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    express object
+	    express app
 
           </div>
           
@@ -2674,460 +2400,8 @@ The parameter <code>id</code> should input as <code>dynamicPath</code> in the co
       
         <div class='space-bottom0'>
           <div>
-            <span class='code bold'>route_settings</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    setting of route
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>route_settings.default_path</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>prefix of path
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>route_settings.version</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>path version
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>route_settings.fixtures</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>model fixture, auto map by model name and file name
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>settings</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>>)</code>
-	    setting of model and controller
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>settings.model</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>model setting
-</span></td>
-</tr>
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>settings.model.object</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>model of route
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>settings.model.fixture</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>fixture of model
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>settings.model.clear</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a></code>
-  </td>
-  <td class='break-word'><span>pass 'true', if want to clear all record inside model
-</span></td>
-</tr>
-
-
-  
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>settings.controller</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>controller setting
-</span></td>
-</tr>
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>settings.controller.object</span> <code class='quiet'><a href="#defaultcontroller">DefaultController</a></code>
-  </td>
-  <td class='break-word'><span>controller of model
-</span></td>
-</tr>
-
-
-  
-    <tr>
-  <td class='break-word'><span class='code bold'>settings.controller.ignore</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a></code>
-  </td>
-  <td class='break-word'><span>ignore which APIs
-</span></td>
-</tr>
-
-
-  
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>settings.functions</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">Function</a></code>
-  </td>
-  <td class='break-word'><span>list of custom APIs function
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-    
-      <div class='py1 quiet mt1 prose-big'>Returns</div>
-      <code><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Promise">Promise</a>&#x3C;null></code>:
-        promise of null, only tell code when setup completed
-
-      
-    
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='_auto_load_fixture'>
-      _auto_load_fixture
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>auto run fixture load from db/fixtures/index</p>
-
-
-  <div class='pre p1 fill-light mt0'>_auto_load_fixture</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(Model)</code>
-	    model object from models folder
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fixtures</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    object of fixture list
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>fixtures.json</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>></code>
-  </td>
-  <td class='break-word'><span>json of column to create
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>fixtures.js</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>></code>
-  </td>
-  <td class='break-word'><span>js fixture generator, This method should return Promise
-<null>
- and accept none parameter
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='choose_fixture_to_load'>
-      choose_fixture_to_load
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>choose way to loading fixture</p>
-
-
-  <div class='pre p1 fill-light mt0'>choose_fixture_to_load</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(Model)</code>
-	    database model
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fixture</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    object/json of model column
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fixtures</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    object of fixture list
-
-          </div>
-          
-          <table class='mt1 mb2 fixed-table h5 col-12'>
-            <colgroup>
-              <col width='30%' />
-              <col width='70%' />
-            </colgroup>
-            <thead>
-              <tr class='bold fill-light'>
-                <th>Name</th>
-                <th>Description</th>
-              </tr>
-            </thead>
-            <tbody class='mt1'>
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>fixtures.json</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/JSON">json</a>></code>
-  </td>
-  <td class='break-word'><span>json of column to create
-</span></td>
-</tr>
-
-
-              
-                <tr>
-  <td class='break-word'><span class='code bold'>fixtures.js</span> <code class='quiet'><a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Array">Array</a>&#x3C;<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Statements/function">function</a>></code>
-  </td>
-  <td class='break-word'><span>js fixture generator, This method should return Promise
-<null>
- and accept none parameter
-</span></td>
-</tr>
-
-
-              
-            </tbody>
-          </table>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>is_fixture</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Boolean">boolean</a>)</code>
-	    flag that need to load as 1 fixture or multiple of them
-
-          </div>
-          
-        </div>
-      
-    </div>
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-
-  
-</section>
-
-          
-        
-          
-            <section class='p2 mb2 clearfix bg-white minishadow'>
-
-  
-  <div class='clearfix'>
-    
-    <h3 class='fl m0' id='_load_fixture'>
-      _load_fixture
-    </h3>
-    
-    
-  </div>
-  
-
-  <p>load fixture (json) to model by create method.</p>
-
-
-  <div class='pre p1 fill-light mt0'>_load_fixture</div>
-  
-  
-
-  
-  
-  
-  
-  
-  
-
-  
-    <div class='py1 quiet mt1 prose-big'>Parameters</div>
-    <div class='prose'>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>model</span> <code class='quiet'>(Model)</code>
-	    model of database
-
-          </div>
-          
-        </div>
-      
-        <div class='space-bottom0'>
-          <div>
-            <span class='code bold'>fixture</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
-	    data to create, as json object
+            <span class='code bold'>Logger</span> <code class='quiet'>(<a href="https://developer.mozilla.org/docs/Web/JavaScript/Reference/Global_Objects/Object">Object</a>)</code>
+	    logger for log
 
           </div>
           
