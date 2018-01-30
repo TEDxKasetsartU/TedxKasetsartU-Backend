@@ -61,7 +61,7 @@ class DefaultModel {
         this.n = name;
     }
 
-    is_connected() {
+    static is_connected() {
         return new Promise((res, rej) => {
             const db = this.mongoose.connection;
             db.on("error", rej);

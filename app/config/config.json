@@ -9,7 +9,7 @@
   },
   "citest": {
     "host": "127.0.0.1",
-    "port": 27017
+    "port": 8123
   },
   "production": {
     "use_env_variable": "MONGODB_URI"

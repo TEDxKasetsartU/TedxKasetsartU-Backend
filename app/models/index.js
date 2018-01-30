@@ -32,7 +32,7 @@ fs.readdirSync(__dirname)
         (file.indexOf(".") !== 0) &&
         (file.slice(-3) === ".js"))
     .forEach(file => {
-        if (file != "default.js" && file != "index.js") {
+        if (file != "index.js") {
             db[file.split(".")[0]] = require(path.join(__dirname, file));
         }
     });
