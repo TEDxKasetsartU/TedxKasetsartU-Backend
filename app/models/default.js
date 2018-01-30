@@ -249,7 +249,7 @@ class DefaultModel {
      * @returns {Promise<null>} promise of null
      */
     clear_db() {
-        console.log("CLEAR DATABASE!!??");
+        // console.log("CLEAR DATABASE!!??");
         return this.delete_by_condition({});
     }
 }
