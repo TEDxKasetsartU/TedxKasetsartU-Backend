@@ -30,7 +30,9 @@ const {
 chai.use(chaiHttp);
 
 function fixture_loader(model_name) {
-    return settings.database.loader.by_name(model_name);
+    return settings.database.loader.by_name(model_name).catch(err => {
+        console.error(err.message);
+    });
 }
 
 //Our parent block
