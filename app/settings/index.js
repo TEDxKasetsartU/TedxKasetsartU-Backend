@@ -1,7 +1,7 @@
 const path = require("path");
 const dirname = path.resolve(__dirname, "../..");
 
-const env = process.env.NODE_ENV || "development";
+const env = (process.env.NODE_STAGING == true) ? "staging" : process.env.NODE_ENV || "development";
 const prefix = "/api";
 const version = "/v2";
 

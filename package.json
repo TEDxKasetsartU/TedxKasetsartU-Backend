@@ -11,6 +11,7 @@
     "start:db": "mongod --config ./app/db/config/mongod.conf --fork --logpath ./app/db/logs/database.log",
     "stop:db": "mongo admin --host 127.0.0.1 --port 8123 ./app/db/scripts/shutdown.js",
     "start:db:watch": "mongod --config ./app/db/config/mongod.conf",
+    "start:stag": "NODE_ENV=staging npm run start",
     "start:prod": "NODE_ENV=production npm run start",
     "test:mocha": "mocha --timeout 10000 --colors --exit ./tests/**/*.spec.js",
     "test": "NODE_ENV=test npm run test:mocha --",
@@ -91,5 +92,9 @@
     "title": "API Documents for TEDxKasetsartU",
     "url": "https://tedxku-backend.herokuapp.com",
     "sampleUrl": "https://tedxku-backend.herokuapp.com"
+  },
+  "engines": {
+    "node": "9.4.x",
+    "npm": "5.6.x"
   }
 }

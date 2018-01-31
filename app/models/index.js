@@ -15,9 +15,7 @@ const config = require(`${__dirname}/../config/config.json`)[env];
 const db = {};
 
 if (config.use_env_variable) {
-    mongoose.connect(process.env[config.use_env_variable], {
-        useMongoClient: true
-    });
+    mongoose.connect(process.env[config.use_env_variable]);
 } else {
     let url = "mongodb://" + config.host + ":" + config.port;
     mongoose.connect(url);
