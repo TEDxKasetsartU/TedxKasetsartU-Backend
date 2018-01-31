@@ -1,3 +1,4 @@
+require("newrelic");
 const express = require("express");
 
 const setting = require("./app/settings");

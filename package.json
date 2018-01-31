@@ -63,6 +63,7 @@
     "express-session": "^1.15.6",
     "mongoose": "^5.0.2",
     "morgan": "^1.9.0",
+    "newrelic": "^2.6.1",
     "node-fetch": "^1.7.3",
     "pm2": "^2.9.3",
     "restify-error": "^1.0.0",
