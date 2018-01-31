@@ -4,7 +4,7 @@
 
 | Badge | Description |
 | ----- | ----------- |
-| [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://libraries.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | monitoring dependencies, by **libraries.io** |
+| [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg?maxAge=180000)](https://libraries.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | monitoring dependencies, by **libraries.io** |
 | [![Known Vulnerabilities](https://snyk.io/test/github/tedxkasetsartu/tedxkasetsartu-backend/badge.svg?targetFile=package.json)](https://snyk.io/test/github/tedxkasetsartu/tedxkasetsartu-backend?targetFile=package.json) | monitoring vulnerabilities dependencies, by **snyk.io** |
 | [![Codecov](https://img.shields.io/codecov/c/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codecov.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | code coverage, use **codecov** |
 | [![CircleCI](https://img.shields.io/circleci/project/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://circleci.com/gh/TEDxKasetsartU/TedxKasetsartU-Backend) | testing CI, use **CircleCI** |
