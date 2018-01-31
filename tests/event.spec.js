@@ -29,16 +29,14 @@ const {
 chai.use(require("chai-http"));
 
 function fixture_loader(model_name) {
-    return settings.database.loader.by_name(model_name).then(res => {
-        console.log(res);
-    });
+    return settings.database.loader.by_name(model_name);
 }
 
 //Our parent block
 describe("Events", () => {
     before((done) => {
         this.server = require("../server");
-        fixture_loader("event").then(done);
+        fixture_loader("event").then(() => done());
     });
 
     after(() => {
@@ -58,8 +56,6 @@ describe("Events", () => {
                     // console.log(res.body);
                     expect(res.body.complete).to.be.true;
                     expect(res).to.have.status(200);
-                }).catch(err => {
-                    console.error(err);
                 });
         });
 
@@ -71,8 +67,6 @@ describe("Events", () => {
                     // console.log(res.body);
                     expect(res.body.complete).to.be.true;
                     expect(res).to.have.status(200);
-                }).catch(err => {
-                    console.error(err);
                 });
         });
 
@@ -93,8 +87,6 @@ describe("Events", () => {
                     expect(res.body.complete).to.be.true;
                     expect(res.body.result).to.be.an("array").that.not.empty;
                     expect(res).to.have.status(200);
-                }).catch(err => {
-                    console.error(err);
                 });
         });
 
@@ -106,8 +98,6 @@ describe("Events", () => {
                 expect(res.body.complete).to.be.true;
                 expect(res.body.result).to.be.an("array").that.not.be.empty;
                 expect(res).to.have.status(200);
-            }).catch(err => {
-                console.error(err);
             });
         });
 
