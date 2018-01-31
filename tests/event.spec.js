@@ -22,24 +22,23 @@ const settings = require("../app/settings");
 
 //Require the dev-dependencies
 const chai = require("chai");
-const chaiHttp = require("chai-http");
 const {
     expect
 } = require("chai");
 
-chai.use(chaiHttp);
+chai.use(require("chai-http"));
 
 function fixture_loader(model_name) {
-    return settings.database.loader.by_name(model_name).catch(err => {
-        console.error(err.message);
+    return settings.database.loader.by_name(model_name).then(res => {
+        console.log(res);
     });
 }
 
 //Our parent block
 describe("Events", () => {
-    before(() => {
+    before((done) => {
         this.server = require("../server");
-        return fixture_loader("event");
+        fixture_loader("event").then(done);
     });
 
     after(() => {
