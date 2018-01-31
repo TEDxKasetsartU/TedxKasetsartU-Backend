@@ -1,3 +1,10 @@
+engines:
+  duplication:
+    enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 100
 plugins:
   fixme:
     enabled: true
