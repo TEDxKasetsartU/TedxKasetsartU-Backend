@@ -11,6 +11,9 @@
     "host": "127.0.0.1",
     "port": 27017
   },
+  "staging": {
+    "use_env_variable": "MONGODB_URI"
+  },
   "production": {
     "use_env_variable": "MONGODB_URI"
   }

@@ -27,24 +27,24 @@ const {
 chai.use(chaiHttp);
 
 function fixture_loader(model_name) {
-    return settings.database.loader(settings.model[model_name]);
+    return settings.database.loader.by_name(model_name);
 }
 
 //Our parent block
 describe("Events", () => {
     before(() => {
         this.server = require("../server");
-        return Promise.all([
-            fixture_loader("member"),
-            fixture_loader("speaker"),
-            fixture_loader("location"),
-            fixture_loader("banner"),
-            fixture_loader("event")
-        ]);
+        return fixture_loader("event");
     });
 
     after(() => {
-        return settings.model.event.clear_db();
+        return Promise.all([
+            settings.model.event.clear_db(),
+            settings.model.speaker.clear_db(),
+            settings.model.member.clear_db(),
+            settings.model.location.clear_db(),
+            settings.model.banner.clear_db()
+        ]);
     });
 
     describe("/GET event", () => {

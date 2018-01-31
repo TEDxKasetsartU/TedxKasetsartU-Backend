@@ -19,7 +19,7 @@ const Route = setting.route.object;
 Route.default(app, responseUtil, Logger);
 Route.create(app, server_info.path, new setting.controller.event(setting.model.event), {
     fixture: {
-        load: true,
+        load: env !== "test" && env !== "citest",
         clear: env === "develop" || env === "development" || env === "prod" || env === "production"
     },
     action: ["get", "list"],

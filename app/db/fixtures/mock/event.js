@@ -17,7 +17,11 @@ const query = (model, size) => {
     });
 };
 
-module.exports = () => {
+const get_dependent_tables = () => {
+    return ["location", "speaker", "member", "banner"];
+};
+
+const exec = () => {
     const models = require("../../../settings").model;
     const event = models.event;
     const eventjson = require("./event-test.json");
@@ -38,4 +42,9 @@ module.exports = () => {
         }
     });
     return Promise.all(promises);
+};
+
+module.exports = {
+    dependent_table_name: get_dependent_tables,
+    exec: exec
 };
