@@ -10,7 +10,10 @@ function getRandomInt(min, max) {
 }
 
 function randomEvent() {
-    return settings.model.event.randomOne();
+    return settings.model.event.count().then(res => {
+        console.log("event size: " + res);
+        return settings.model.event.randomOne();
+    });
 }
 
 process.env.PORT = getRandomInt(4002, 19999);
