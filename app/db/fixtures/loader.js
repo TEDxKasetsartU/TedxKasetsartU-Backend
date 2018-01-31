@@ -17,9 +17,11 @@ module.exports = (model) => {
         fixtures.json[model.low_name].forEach(async (element) => {
             promises.push(model.create(element));
         });
+        console.log("load fixture (.json) -- " + model.low_name);
         return Promise.all(promises);
     } else if (fixtures.js[model.low_name]) {
         const method = fixtures.js[model.low_name];
+        console.log("load fixture (.js) -- " + model.low_name);
         return method();
     } else {
         console.error(model.low_name + " fixtures not exist");

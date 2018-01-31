@@ -38,7 +38,13 @@ function fixture_loader(model_name) {
 describe("Events", () => {
     before(() => {
         this.server = require("../server");
-        return fixture_loader("event");
+        return Promise.all([
+            fixture_loader("member"),
+            fixture_loader("speaker"),
+            fixture_loader("location"),
+            fixture_loader("banner"),
+            fixture_loader("event")
+        ]);
     });
 
     after(() => {
