@@ -59,7 +59,7 @@
   "dependencies": {
     "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
-    "chalk": "^2.3.0",
+    "colors": "^1.1.2",
     "express": "^4.16.2",
     "express-session": "^1.15.6",
     "mongoose": "^5.0.2",
@@ -85,8 +85,7 @@
     "mocha-junit-reporter": "^1.15.0",
     "mongoose-simple-random": "^0.4.1",
     "nodemon": "^1.14.10",
-    "nyc": "^11.4.1",
-    "supports-color": "^5.1.0"
+    "nyc": "^11.4.1"
   },
   "apidoc": {
     "title": "API Documents for TEDxKasetsartU",
