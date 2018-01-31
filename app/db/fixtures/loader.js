@@ -10,18 +10,18 @@ const load_model_name = (name) => {
         fixtures.json[model.low_name].forEach((element) => {
             promises.push(model.create(element));
         });
-        // console.log("load fixture (.json) -- " + name);
+        console.log("load fixture (.json) -- " + name);
         return Promise.all(promises);
     } else if (fixtures.js[model.low_name]) {
         const util = fixtures.js[model.low_name];
         util.dependent_table_name().forEach(name => promises.push(settings.database.loader.by_name(name)));
 
-        // console.log("load fixture (.js) -- " + name);
+        console.log("load fixture (.js) -- " + name);
         return Promise.all(promises).then(() => {
             return util.exec();
         });
     } else {
-        // console.error(name + " fixtures not exist");
+        console.error(name + " fixtures not exist");
         return new Promise((res) => res());
     }
 };

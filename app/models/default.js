@@ -217,9 +217,8 @@ class DefaultModel {
         });
 
         return new Promise((res, rej) => {
-            return this.model.findRandom(filter, fields, options, function (err, results) {
-                if (err)
-                    return rej(err);
+            return this.model.findRandom(filter, fields, options, (err, results) => {
+                if (err) return rej(err);
                 if (!results) rej(new errors.NotFoundError("Cannot random, try again"));
                 else res(results);
             });
@@ -233,7 +232,7 @@ class DefaultModel {
 
         return new Promise((res, rej) => {
             return this.model.findOneRandom((err, result) => {
-                if (err) rej(new errors.NotFoundError("Cannot random, try again"));
+                if (err) rej(new errors.NotFoundError(`Cannot random, ${err}`));
                 if (!result) rej(new errors.NotFoundError("Cannot random, try again"));
                 else res(result);
             });

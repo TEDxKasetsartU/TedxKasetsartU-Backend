@@ -3,17 +3,11 @@ const random = (min = 1, max = 20) => {
 };
 
 const query = (model, size) => {
-    return new Promise((res, rej) => {
-        const models = require("../../../settings").model;
-        models[model].random({}, {
-            "_id": 1
-        }, {
-            "limit": size
-        }).then((list) => {
-            return res(list);
-        }).catch(err => {
-            return rej(err);
-        });
+    const models = require("../../../settings").model;
+    return models[model].random({}, {
+        "_id": 1
+    }, {
+        "limit": size
     });
 };
 
@@ -36,9 +30,10 @@ const exec = () => {
             element.banners = await query("banner", random(10, 30));
             promises.push(event.create(element));
         } catch (err) {
-            promises.push(new Promise((res, rej) => {
-                rej(err);
-            }));
+            console.error("########");
+            // promises.push(new Promise((res, rej) => {
+            //     rej(err);
+            // }));
         }
     });
     return Promise.all(promises);
