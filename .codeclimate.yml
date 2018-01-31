@@ -6,6 +6,9 @@ plugins:
     enabled: true
   nodesecurity:
     enabled: true
+    checks:
+      Vulnerable module "superagent" identified:
+        enabled: false
   duplication:
     enabled: true
     config:
@@ -13,5 +16,5 @@ plugins:
         javascript:
           mass_threshold: 100
 exclude_patterns:
-  - "apidocs/**/*"
-  - "docs/**/*"
+  - apidocs/**/*
+  - docs/**/*

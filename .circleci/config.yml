@@ -13,7 +13,9 @@ jobs:
           keys:
             - 'v1-dependencies-{{ checksum "package.json" }}'
             - v1-dependencies-
-      - run: npm install
+      - run:
+          name: Install Dependencies
+          command: npm install
       - save_cache:
           paths:
             - node_modules
@@ -23,7 +25,7 @@ jobs:
           command: npm run lint
       - run:
           name: Testing application
-          command: 'npm run ci:test'
+          command: 'npm run greenkeeper:update && npm run ci:test && npm run greenkeeper:upload'
           environment:
             MOCHA_FILE: test/results/test-results.xml
       - run:
