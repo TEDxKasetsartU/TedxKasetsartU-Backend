@@ -45,24 +45,28 @@
 
 ### Code coverage
 
-| Available command   | Description                                               |
-| ------------------- | --------------------------------------------------------- |
-| `npm` run cov       | run test and sent the report to **coveralls**             |
-| `npm` run cov:check | run checker coverage, all of this should more and **70%** |
-|                     | *lines*, *functions*, *statements*, and *branches*        |
+| Available command   | Description                                                  |
+| ------------------- | ------------------------------------------------------------ |
+| `npm` run cov       | run test and coverage, accept 1 parameter `-- <report-type>` |
+|                     | support type `text-summary`, `html`, `json-summary`          |
+| `npm` run cov:check | run checker coverage, all of this should more and **70%**    |
+|                     | *lines* , *functions* , *statements* , and *branches*        |
 
 ### Linter
 
-| Available command | Description                       |
-| ----------------- | --------------------------------- |
-| `npm` run lint    | run linter analysis, using eslint |
+| Available command  | Description                                           |
+| ------------------ | ----------------------------------------------------- |
+| `npm` run lint     | run linter analysis, using **eslint**                 |
+| `npm` run lint:doc | run linter analysis document, using **documentation** |
 
 ### CI testing
 
-| Available command   | Description                                                                 |
-| ------------------- | --------------------------------------------------------------------------- |
-| `npm` run ci:test   | run test, This must run in **CircleCI** only                                |
-| `npm` run ci:report | run test and sent report to **codecov**, This must run in **CircleCI** only |
+| Available command            | Description                                        |
+| ---------------------------- | -------------------------------------------------- |
+| `npm` run ci:test            | run test, In **CircleCI** only                     |
+| `npm` run ci:report          | create report to **codecov**, In **CircleCI** only |
+| `npm` run greenkeeper:update | run **before** `ci:test` command, manage lock file |
+| `npm` run greenkeeper:upload | run **after** `ci:test` command, update lock file  |
 
 ### Monitoring
 
@@ -86,8 +90,13 @@ I use [keymetrics](https://app.keymetrics.io/#/)
 
 ### Document
 
-| Available command       | Description                            |
-| ----------------------- | -------------------------------------- |
-| `npm` run build:doc     | build code document to `docs` folder   |
-| `npm` run build:apidoc  | build api document to `apidocs` folder |
-| `npm` run build:doc:all | build both api and code docs           |
+| Available command        | Description                                     |
+| ------------------------ | ----------------------------------------------- |
+| `npm` run build:doc      | build code document to `docs` folder            |
+| `npm` run build:apidoc   | build api document to `apidocs` folder          |
+| `npm` run build:doc:all  | build both api and code docs                    |
+| `npm` run build:gh       | build all document and deploy to github-page    |
+| `npm` run deploy:doc     | run lint doc and deploy document to github-page |
+| `npm` run deploy:version | update application version                      |
+|                          | accept major, minor, patch, etc.                |
+| `npm` run serve:doc      | run document website as server                  |
