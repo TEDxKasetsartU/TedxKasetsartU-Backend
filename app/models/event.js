@@ -27,8 +27,10 @@ const EventModel = new DefaultModel("Event", {
         // index: true,
         // required: [true, "Event year is required"]
     },
-    // FIXME: should be start date time - end date time
-    datetime: {
+    start_datetime: {
+        type: Date
+    },
+    end_datetime: {
         type: Date
     },
     locations: {
@@ -49,8 +51,8 @@ const EventModel = new DefaultModel("Event", {
     }
 }, {
     timestamps: {
-        createdAt: "createdAt",
-        updateAt: "updateAt"
+        createdAt: "created_at",
+        updateAt: "update_at"
     }
 });
 

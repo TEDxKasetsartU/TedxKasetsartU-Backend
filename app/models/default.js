@@ -96,6 +96,25 @@ class DefaultModel {
     }
 
     /**
+     * @private
+     * @param {Object} mongooseQuery mongoose query object
+     * @param {string} modelID mongoose model id (represent by _id)
+     * @param {string} actionString action of the query
+     */
+    _action_with_id(mongooseQuery, modelID, actionString) {
+        return new Promise((res, rej) => {
+            mongooseQuery.exec()
+                .then(result => {
+                    if (!result) rej(new errors.NotFoundError(`Cannot ${actionString} id ${modelID}, bacause it not exist.`));
+                    res(result);
+                })
+                .catch(err => {
+                    rej(err);
+                });
+        });
+    }
+
+    /**
      * create new model
      * @param {Object} parameters model columns
      * @returns {Promise<Model>} promise of mongo model
@@ -138,15 +157,7 @@ class DefaultModel {
      * @returns {Promise<Model>} promise of mongo model
      */
     retrieve(id) {
-        return new Promise((res, rej) => {
-            return this.model.findById(id)
-                .exec().then((result) => {
-                    if (!result) rej(new errors.NotFoundError("Cannot get id " + id + " is not exist."));
-                    res(result);
-                }).catch((err) => {
-                    rej(err);
-                });
-        });
+        return this._action_with_id(this.model.findById(id), id, "retrieve");
     }
 
     /**
@@ -159,16 +170,9 @@ class DefaultModel {
         body["$inc"] = {
             "__v": 1
         };
-        return new Promise((res, rej) => {
-            return this.model.findByIdAndUpdate(id, body, {
-                "new": true
-            }).exec().then((result) => {
-                if (!result) rej(new errors.NotFoundError("Cannot update id " + id + " is not exist"));
-                res(result);
-            }).catch((err) => {
-                rej(err);
-            });
-        });
+        return this._action_with_id(this.model.findByIdAndUpdate(id, body, {
+            "new": true
+        }), id, "update");
     }
 
     /**
@@ -177,15 +181,7 @@ class DefaultModel {
      * @returns {Promise<Null>} promise of empty
      */
     delete(id) {
-        return new Promise((res, rej) => {
-            return this.model.findByIdAndRemove(id)
-                .exec().then((result) => {
-                    if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
-                    res(result);
-                }).catch((err) => {
-                    rej(err);
-                });
-        });
+        return this._action_with_id(this.model.findByIdAndRemove(id), id, "delete");
     }
 
     /**
