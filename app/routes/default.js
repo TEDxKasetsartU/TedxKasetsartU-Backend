@@ -58,12 +58,12 @@ module.exports = {
         };
 
         const clear_data = async (flag) => {
-            console.log("clear data: " + flag);
+            // console.log("clear data: " + flag);
             if (flag) await controller.model.clear_db();
         };
 
         const load_data = async (flag) => {
-            console.log("load data: " + flag);
+            // console.log("load data: " + flag);
             const loader = require("../settings").database.loader;
             if (flag) await loader.by_model(controller.model);
         };
