@@ -20,9 +20,7 @@ if (config.use_env_variable) {
     });
 } else {
     let url = "mongodb://" + config.host + ":" + config.port;
-    mongoose.connect(url, {
-        useMongoClient: true
-    });
+    mongoose.connect(url);
 }
 
 mongoose.Promise = require("bluebird"); // promise library
