@@ -34,9 +34,9 @@ function fixture_loader(model_name) {
 
 //Our parent block
 describe("Events", () => {
-    before((done) => {
+    before(() => {
         this.server = require("../server");
-        fixture_loader("event").then(() => done());
+        return fixture_loader("event");
     });
 
     after(() => {
