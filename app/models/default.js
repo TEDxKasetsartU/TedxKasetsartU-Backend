@@ -61,6 +61,14 @@ class DefaultModel {
         this.n = name;
     }
 
+    static is_connected() {
+        return new Promise((res, rej) => {
+            const db = require("mongoose").connection;
+            db.on("error", rej);
+            db.once("open", res);
+        });
+    }
+
     /**
      * @constructor
      */
@@ -71,6 +79,7 @@ class DefaultModel {
         this.schema = new this.mongoose.Schema(database_columns, database_options);
         if (this._is_testing())
             this.schema.plugin(require("mongoose-simple-random"));
+
         try {
             this.model = this.mongoose.model(database_name, this.schema);
         } catch (err) {
@@ -84,6 +93,25 @@ class DefaultModel {
      */
     _is_testing() {
         return (this.env == "development" || this.env == "test" || this.env == "citest");
+    }
+
+    /**
+     * @private
+     * @param {Object} mongooseQuery mongoose query object
+     * @param {string} modelID mongoose model id (represent by _id)
+     * @param {string} actionString action of the query
+     */
+    _action_with_id(mongooseQuery, modelID, actionString) {
+        return new Promise((res, rej) => {
+            mongooseQuery.exec()
+                .then(result => {
+                    if (!result) rej(new errors.NotFoundError(`Cannot ${actionString} id ${modelID}, bacause it not exist.`));
+                    res(result);
+                })
+                .catch(err => {
+                    rej(err);
+                });
+        });
     }
 
     /**
@@ -129,15 +157,7 @@ class DefaultModel {
      * @returns {Promise<Model>} promise of mongo model
      */
     retrieve(id) {
-        return new Promise((res, rej) => {
-            return this.model.findById(id)
-                .exec().then((result) => {
-                    if (!result) rej(new errors.NotFoundError("Cannot get id " + id + " is not exist."));
-                    res(result);
-                }).catch((err) => {
-                    rej(err);
-                });
-        });
+        return this._action_with_id(this.model.findById(id), id, "retrieve");
     }
 
     /**
@@ -150,16 +170,9 @@ class DefaultModel {
         body["$inc"] = {
             "__v": 1
         };
-        return new Promise((res, rej) => {
-            return this.model.findByIdAndUpdate(id, body, {
-                "new": true
-            }).exec().then((result) => {
-                if (!result) rej(new errors.NotFoundError("Cannot update id " + id + " is not exist"));
-                res(result);
-            }).catch((err) => {
-                rej(err);
-            });
-        });
+        return this._action_with_id(this.model.findByIdAndUpdate(id, body, {
+            "new": true
+        }), id, "update");
     }
 
     /**
@@ -168,15 +181,7 @@ class DefaultModel {
      * @returns {Promise<Null>} promise of empty
      */
     delete(id) {
-        return new Promise((res, rej) => {
-            return this.model.findByIdAndRemove(id)
-                .exec().then((result) => {
-                    if (!result) rej(new errors.NotFoundError("ID " + id + " is not exist"));
-                    res(result);
-                }).catch((err) => {
-                    rej(err);
-                });
-        });
+        return this._action_with_id(this.model.findByIdAndRemove(id), id, "delete");
     }
 
     /**
@@ -221,11 +226,26 @@ class DefaultModel {
         });
     }
 
+    randomOne() {
+        if (!this._is_testing()) return new Promise((res) => {
+            res();
+        });
+
+        return new Promise((res, rej) => {
+            return this.model.findOneRandom((err, result) => {
+                if (err) rej(new errors.NotFoundError("Cannot random, try again"));
+                if (!result) rej(new errors.NotFoundError("Cannot random, try again"));
+                else res(result);
+            });
+        });
+    }
+
     /** 
      * clear all row this model (Table)
      * @returns {Promise<null>} promise of null
      */
     clear_db() {
+        console.log(`CLEAR ${this.name} DATABASE!!??`);
         return this.delete_by_condition({});
     }
 }

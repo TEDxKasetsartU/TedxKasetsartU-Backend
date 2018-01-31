@@ -1,4 +1,4 @@
-# TEDxKasetsart-Backend [![license](https://img.shields.io/github/license/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://github.com/TEDxKasetsartU/TedxKasetsartU-Backend)
+# TEDxKasetsart-Backend [![license](https://img.shields.io/github/license/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://github.com/TEDxKasetsartU/TedxKasetsartU-Backend) [![Greenkeeper badge](https://badges.greenkeeper.io/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://greenkeeper.io/)
 
 [![Greenkeeper badge](https://badges.greenkeeper.io/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://greenkeeper.io/)
 
@@ -6,7 +6,8 @@
 
 | Badge | Description |
 | ----- | ----------- |
-| [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://libraries.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | monitoring dependencies, by **libraries.io** |
+| [![Libraries.io for GitHub](https://img.shields.io/librariesio/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg?maxAge=180000)](https://libraries.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | monitoring dependencies, by **libraries.io** |
+| [![Known Vulnerabilities](https://snyk.io/test/github/tedxkasetsartu/tedxkasetsartu-backend/badge.svg?targetFile=package.json)](https://snyk.io/test/github/tedxkasetsartu/tedxkasetsartu-backend?targetFile=package.json) | monitoring vulnerabilities dependencies, by **snyk.io** |
 | [![Codecov](https://img.shields.io/codecov/c/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codecov.io/github/TEDxKasetsartU/TedxKasetsartU-Backend) | code coverage, use **codecov** |
 | [![CircleCI](https://img.shields.io/circleci/project/github/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://circleci.com/gh/TEDxKasetsartU/TedxKasetsartU-Backend) | testing CI, use **CircleCI** |
 | [![Code Climate](https://img.shields.io/codeclimate/maintainability/TEDxKasetsartU/TedxKasetsartU-Backend.svg)](https://codeclimate.com/github/TEDxKasetsartU/TedxKasetsartU-Backend) | analysis code and maintainability, use **code climates** |

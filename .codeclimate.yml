@@ -1,3 +1,4 @@
+version: 2
 plugins:
   fixme:
     enabled: true
@@ -5,6 +6,12 @@ plugins:
     enabled: true
   nodesecurity:
     enabled: true
+  duplication:
+    enabled: true
+    config:
+      languages:
+        javascript:
+          mass_threshold: 100
 exclude_patterns:
   - "apidocs/**/*"
   - "docs/**/*"

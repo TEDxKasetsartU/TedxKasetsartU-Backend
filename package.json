@@ -23,7 +23,7 @@
     "build:doc:watch": "documentation serve app/apis/**/*.js app/controllers/**/*.js app/db/**/*.js app/models/**/*.js app/routes/**/*.js app/settings/**/*.js",
     "build:apidoc": "apidoc -i app -o documents/apidocs",
     "build:doc:all": "npm run build:doc && npm run build:apidoc",
-    "ci:test": "NODE_ENV=citest nyc npm run test:mocha -- --reporter mocha-junit-reporter",
+    "ci:test": "NODE_ENV=citest nyc npm run test:mocha -- --reporter mocha-junit-reporter --retries 5",
     "ci:report": "NODE_ENV=citest nyc report --reporter=lcov > coverage.lcov && codecov",
     "build:gh": "npm run build:doc:all && gh-pages -d documents",
     "monitor:start": "pm2 start server.js --name rdf-server",
