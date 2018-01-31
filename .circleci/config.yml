@@ -25,10 +25,7 @@ jobs:
           command: npm run lint
       - run:
           name: Testing application
-          command: |
-            'npm run greenkeeper:update'
-            'npm run ci:test'
-            'npm run greenkeeper:upload'
+          command: 'npm run greenkeeper:update && npm run ci:test && npm run greenkeeper:upload'
           environment:
             MOCHA_FILE: test/results/test-results.xml
       - run:
