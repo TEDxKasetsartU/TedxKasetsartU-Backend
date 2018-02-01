@@ -21,6 +21,9 @@ jobs:
             - node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
       - run:
+          name: Save change
+          command: git status && git add . && git stash push
+      - run:
           name: Linter code
           command: npm run lint
       - run:
