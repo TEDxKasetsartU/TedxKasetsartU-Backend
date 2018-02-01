@@ -10,7 +10,7 @@ function getRandomInt(min, max) {
 }
 
 function randomEvent() {
-    return settings.model.event.count().then(res => {
+    return settings.model.event.count().then(() => {
         // console.log("event size: " + res);
         return settings.model.event.randomOne();
     });
@@ -35,7 +35,7 @@ function fixture_loader(model_name) {
 //Our parent block
 describe("Events", () => {
     before(() => {
-        this.server = require("../server");
+        this.server = require("../server.utils")(settings);
         return fixture_loader("event");
     });
 

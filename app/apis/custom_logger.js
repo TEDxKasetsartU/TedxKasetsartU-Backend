@@ -1,8 +1,7 @@
 const {
     createLogger,
     format,
-    transports,
-    config
+    transports
 } = require("winston");
 const {
     combine,
@@ -21,25 +20,23 @@ const defaultFormat = (info) => {
         return value == null || value !== value ? "" : prefix + value + profix;
     };
 
+    console.log(info);
+    
+
     let header = `${info.timestamp} [${info.label}-${setting.env}] ${info.level}: `;
     let url = (setting.env === "production") ? setting.server.url : setting.server.url + ":" + setting.server.port;
 
     if (typeof info.message == "string")
         header += `${info.message}`;
     else
-        header += util.format("%s%s%s", `${info.message.title}`, `${defaultTo(" |> ", info.message.message)}`, `${defaultTo(" <=< " + url, info.message.url, " >=>")}`);
+        header += util.format("%s%s%s", `${info.message.title.toUpperCase()}`, `${defaultTo(" |> ", info.message.message)}`, `${defaultTo(" <=< " + url, info.message.url, " >=>")}`);
     return header;
 };
 
 const logFormat = printf(defaultFormat);
 
-const level = process.env.NODE_ENV === "production" ? "info" : "silly";
-
 const logger = createLogger({
-    level: level,
-    levels: config.npm.levels,
     format: combine(
-        format.colorize(),
         format.splat(),
         label({
             label: "TEDxKU"
@@ -47,22 +44,27 @@ const logger = createLogger({
         timestamp(),
         logFormat
     ),
-    transports: [
-        new transports.Console({
-            colorize: true
-        })
-    ]
+    transports: [new transports.Console()]
 });
 
-// new transports.File({
-//     colorize: false,
-//     filename: "logs/error.log",
-//     level: "error"
-// }),
-// new transports.File({
-//     colorize: false,
-//     filename: "logs/combined.log"
-// }),
+const logger_file = createLogger({
+    format: combine(
+        label({
+            label: "TEDxKU"
+        }),
+        timestamp(),
+        format.splat(),
+        format.json(),
+        format.prettyPrint()
+    ),
+    transports: [new transports.Console()]
+});
+
+new transports.File({
+    filename: "logs/verbose.log"
+});
+
+logger_file.info("test message %d", 123);
 
 const show_api_path = (action, url) => {
     logger.log("info", {
