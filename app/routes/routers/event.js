@@ -5,7 +5,7 @@ module.exports = (setting, prefix) => {
     const Route = setting.route.object;
     const EventRouter = server_info.express.Router();
 
-    setting.server.setting(EventRouter, setting);
+    // setting.server.setting(EventRouter, setting);
 
     Route.create(EventRouter, prefix, new setting.controller.event(setting.model.event), {
         fixture: {

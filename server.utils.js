@@ -36,5 +36,6 @@ module.exports = (setting) => {
     addRouter(app, setting);
     // listen router
     app.listen(setting.server.port, listen_callback);
+
     return app;
 };

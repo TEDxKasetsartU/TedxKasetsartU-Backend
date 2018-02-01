@@ -19,10 +19,6 @@ const defaultFormat = (info) => {
     const defaultTo = (prefix = "", value, profix = "") => {
         return value == null || value !== value ? "" : prefix + value + profix;
     };
-
-    console.log(info);
-    
-
     let header = `${info.timestamp} [${info.label}-${setting.env}] ${info.level}: `;
     let url = (setting.env === "production") ? setting.server.url : setting.server.url + ":" + setting.server.port;
 
