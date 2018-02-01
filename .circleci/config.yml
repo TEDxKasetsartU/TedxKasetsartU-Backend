@@ -22,7 +22,10 @@ jobs:
           key: 'v1-dependencies-{{ checksum "package.json" }}'
       - run:
           name: Save change
-          command: git status && git diff | cat
+          command: |
+            git status 
+            git add --all
+            git commit -am "Update"
       - run:
           name: Linter code
           command: npm run lint
