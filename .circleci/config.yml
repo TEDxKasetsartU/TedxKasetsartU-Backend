@@ -21,19 +21,21 @@ jobs:
             - node_modules
           key: 'v1-dependencies-{{ checksum "package.json" }}'
       - run:
+          name: Linter code
+          command: npm run lint
+      - run:
           name: Save change
           command: |
             git config user.email "tedxku2018.bot@gmail.com"
             git config user.name "TEDxKU2018"
-            git status 
-            git add --all
+            git status
             git commit -am "Update"
       - run:
-          name: Linter code
-          command: npm run lint
-      - run:
           name: Testing application
-          command: 'npm run greenkeeper:update && npm run ci:test && npm run greenkeeper:upload'
+          command: |
+            npm run greenkeeper:update &&
+            npm run ci:test &&
+            npm run greenkeeper:upload
           environment:
             MOCHA_FILE: test/results/test-results.xml
       - run:
