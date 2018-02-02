@@ -84,7 +84,7 @@
     "mocha": "^5.0.0",
     "mocha-junit-reporter": "^1.15.0",
     "mongoose-simple-random": "^0.4.1",
-    "nodemon": "^1.14.10",
+    "nodemon": "^1.14.12",
     "nyc": "^11.4.1",
     "supports-color": "^5.1.0"
   },
