@@ -11,7 +11,7 @@ const {
 } = format;
 
 // FIXME: implement colors in logging
-const colors = require("colors");
+// const colors = require("colors");
 const util = require("util");
 
 const defaultFormat = (info) => {

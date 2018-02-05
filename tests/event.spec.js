@@ -40,17 +40,19 @@ function stop_fn() {
 }
 
 //Our parent block
-setTimeout(() => {
-    describe("Events", () => {
-        before(() => {
+setTimeout(function () {
+    describe("Events", function () {
+        before(function () {
+            console.log(Object.keys(this));
+            
             this.server = require("../server.utils")(settings);
             return fixture_loader("event");
         });
 
         after(stop_fn);
 
-        describe("/GET event", () => {
-            it("it should GET all the events", () => {
+        describe("/GET event", function () {
+            it("it should GET all the events", function () {
                 return chai.request(this.server).get("/api/v2/events")
                     .then(res => {
                         // console.log(res.body);
@@ -59,7 +61,7 @@ setTimeout(() => {
                     });
             });
 
-            it("it shouldn't GET no-exist event", () => {
+            it("it shouldn't GET no-exist event", function () {
                 return chai.request(this.server).get("/api/v2/event/xxyyzz")
                     .catch(err => {
                         expect(err.response.body.complete).to.be.false;
@@ -67,7 +69,7 @@ setTimeout(() => {
                     });
             });
 
-            it("it should GET list all year available", () => {
+            it("it should GET list all year available", function () {
                 return chai.request(this.server).get("/api/v2/events/years")
                     .then(res => {
                         // console.log(res.body);
@@ -77,7 +79,7 @@ setTimeout(() => {
                     });
             });
 
-            it("it should GET 1 exist event", () => {
+            it("it should GET 1 exist event", function () {
                 return randomEvent()
                     .then((event) => {
                         return chai.request(this.server).get("/api/v2/event/" + event.id);
@@ -89,8 +91,8 @@ setTimeout(() => {
             });
         });
 
-        describe("/GET year", () => {
-            it("it shouldn't GET not exist year", () => {
+        describe("/GET year", function () {
+            it("it shouldn't GET not exist year", function () {
                 return chai.request(this.server)
                     .get("/api/v2/events/1")
                     .catch(err => {
@@ -101,7 +103,7 @@ setTimeout(() => {
                     });
             });
 
-            it("it should GET filter only input year", () => {
+            it("it should GET filter only input year", function () {
                 return randomEvent().then((event) => {
                     return chai.request(this.server).get("/api/v2/events/" + event.year);
                 }).then(res => {
