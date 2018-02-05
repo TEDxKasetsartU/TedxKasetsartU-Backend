@@ -245,7 +245,7 @@ class DefaultModel {
      * @returns {Promise<null>} promise of null
      */
     clear_db() {
-        console.log(`CLEAR ${this.name} DATABASE!!??`);
+        // console.log(`CLEAR ${this.name} DATABASE!!??`);
         return this.delete_by_condition({});
     }
 }

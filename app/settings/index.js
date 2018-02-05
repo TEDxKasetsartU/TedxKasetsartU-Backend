@@ -1,40 +1,55 @@
 const path = require("path");
 const dirname = path.resolve(__dirname, "../..");
 
-const env = (process.env.NODE_STAGING == true) ? "staging" : process.env.NODE_ENV || "development";
-const prefix = "/api";
-const version = "/v2";
+const env = process.env.NODE_ENV || "development";
+const url = (env === "production") ? "https://tedxku-backend.herokuapp.com" : process.env.URL || "http://127.0.0.1";
+
+const l = require(dirname + "/app/apis/custom_logger");
+const r = require(dirname + "/app/apis/response");
+const m = require(dirname + "/app/models");
+const f = require(dirname + "/app/db/fixtures");
+const a = require(dirname + "/app/db/fixtures/loader");
+const d = require(dirname + "/app/controllers/default");
+const e = require(dirname + "/app/controllers/event_controller");
+const o = require(dirname + "/app/routes/default");
+const u = require(dirname + "/app/routes/routers");
+const v = require(dirname + "/app/apidocs/event.docs.js");
+const c = require(dirname + "/app/config/config.json");
+const s = require(dirname + "/package.json");
+const t = require(dirname + "/app/settings/server");
+const express = require("express");
+const expressApp = express();
 
 module.exports = {
     root: dirname,
     api: {
-        l: require(dirname + "/app/apis/custom_logger"),
-        r: require(dirname + "/app/apis/response"),
+        l: l,
+        r: r,
     },
-    model: require(dirname + "/app/models"),
+    model: m,
     database: {
-        fixtures: require(dirname + "/app/db/fixtures"),
-        loader: require(dirname + "/app/db/fixtures/loader"),
+        fixtures: f,
+        loader: a,
     },
     controller: {
-        default: require(dirname + "/app/controllers/default"),
-        event: require(dirname + "/app/controllers/event_controller"),
+        default: d,
+        event: e,
     },
     route: {
-        object: require(dirname + "/app/routes/default")
+        object: o
     },
+    router: u,
     docs: {
-        m: require(dirname + "/app/apidocs/event.docs.js"),
+        v: v,
     },
-    config: require(dirname + "/app/config/config.json"),
-    app_setting: require(dirname + "/package.json"),
+    config: c,
+    app_setting: s,
     env: env,
     server: {
-        url: (env === "production") ? "https://tedxku-backend.herokuapp.com" : process.env.URL || "http://127.0.0.1",
+        express: express,
+        expressApp: expressApp,
+        url: url,
         port: process.env.PORT || 3000,
-        setting: require(dirname + "/app/settings/server"),
-        prefix: prefix,
-        version: version,
-        path: prefix + version + "/"
+        setting: t
     }
 };
