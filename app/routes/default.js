@@ -39,7 +39,7 @@ module.exports = {
      * @version 0.3.0
      * @author Kamontat Chantrachirathumrong
      */
-    create: async (expressApp, path_prefix, controller, settings = {}) => {
+    create: async (expressApp, path_prefix = "/", controller, settings = {}) => {
         const LoggerUtil = require("../settings").api.l.util;
 
         const set_allow_action = (allows) => {
@@ -58,14 +58,18 @@ module.exports = {
         };
 
         const clear_data = async (flag) => {
-            console.log("clear data: " + flag);
+            // console.log("clear data: " + flag);
             if (flag) await controller.model.clear_db();
         };
 
         const load_data = async (flag) => {
-            console.log("load data: " + flag);
+            // console.log("load data: " + flag);
             const loader = require("../settings").database.loader;
             if (flag) await loader.by_model(controller.model);
+        };
+
+        const resolve_url = (name, profix = "") => {
+            return "/" + name + profix;
         };
 
         let action = set_allow_action(settings.action);
@@ -78,35 +82,35 @@ module.exports = {
         if (action.get)
             setting.get = {
                 method: "get",
-                path: path_prefix + controller.model_lower_name + "/:id"
+                path: resolve_url(controller.model_lower_name, "/:id")
             };
 
         // GET list model
         if (action.list)
             setting.list = {
                 method: "get",
-                path: path_prefix + controller.model_plural_name
+                path: resolve_url(controller.model_plural_name)
             };
 
         // POST create new model
         if (action.create)
             setting.create = {
                 method: "post",
-                path: path_prefix + controller.model_lower_name
+                path: resolve_url(controller.model_lower_name)
             };
 
         // PUT update exist model
         if (action.update)
             setting.update = {
                 method: "put",
-                path: path_prefix + controller.model_lower_name + "/:id"
+                path: resolve_url(controller.model_lower_name, "/:id")
             };
 
         // DELETE delete exist model
         if (action.delete)
             setting.delete = {
                 method: "delete",
-                path: path_prefix + controller.model_lower_name + "/:id"
+                path: resolve_url(controller.model_lower_name, "/:id")
             };
 
         if (settings.customs)
@@ -119,8 +123,7 @@ module.exports = {
 
         Object.keys(setting).forEach(element => {
             let s = setting[element];
-            LoggerUtil.show_api_path(s.method.toUpperCase() + "-" + element.toUpperCase(), s.path);
-
+            LoggerUtil.show_api_path(s.method.toUpperCase() + "-" + element.toUpperCase(), path_prefix + s.path);
             expressApp[s.method](s.path, function (req, res) {
                 return controller[element](req, res);
             });
@@ -144,7 +147,9 @@ module.exports = {
      * @version 0.3.0
      * @author Kamontat Chantrachirathumrong
      */
-    default: (expressApp, responseUtil, Logger) => {
+    default: (expressApp, setting) => {
+        const Logger = setting.api.l.logger;
+        const responseUtil = setting.api.r;
         Logger.log("info", {
             "title": "GET-EMPTY",
             "url": "/"
