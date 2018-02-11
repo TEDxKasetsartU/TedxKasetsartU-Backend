@@ -18,7 +18,7 @@ jobs:
           command: npm install && npm install greenkeeper-lockfile@1
       - run:
           name: List dependencies
-          command: npm list
+          command: npm list || true
       - save_cache:
           paths:
             - node_modules
