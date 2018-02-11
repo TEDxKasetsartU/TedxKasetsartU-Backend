@@ -14,8 +14,11 @@ jobs:
             - 'v1-dependencies-{{ checksum "package.json" }}'
             - v1-dependencies-
       - run:
-          name: Install Dependencies
+          name: Install dependencies
           command: npm install && npm install greenkeeper-lockfile@1
+      - run:
+          name: List dependencies
+          command: npm list || true
       - save_cache:
           paths:
             - node_modules
@@ -33,9 +36,9 @@ jobs:
       - run:
           name: Testing application
           command: |
-            npm run greenkeeper:update &&
+            ./node_modules/.bin/greenkeeper-lockfile-update &&
             npm run ci:test &&
-            npm run greenkeeper:upload
+            ./node_modules/.bin/greenkeeper-lockfile-upload
           environment:
             MOCHA_FILE: test/results/test-results.xml
       - run:
