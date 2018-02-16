@@ -18,7 +18,7 @@ jobs:
           command: npm install && npm install greenkeeper-lockfile@1
       - run:
           name: List dependencies
-          command: npm list || true
+          command: ls ./node_modules/.bin
       - save_cache:
           paths:
             - node_modules
@@ -36,8 +36,8 @@ jobs:
       - run:
           name: Testing application
           command: |
-            ./node_modules/.bin/greenkeeper-lockfile-update &&
-            npm run ci:test &&
+            ./node_modules/.bin/greenkeeper-lockfile-update
+            npm run ci:test
             ./node_modules/.bin/greenkeeper-lockfile-upload
           environment:
             MOCHA_FILE: test/results/test-results.xml
