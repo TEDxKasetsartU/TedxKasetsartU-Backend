@@ -11,36 +11,33 @@ jobs:
       - checkout
       - restore_cache:
           keys:
-            - 'v1-dependencies-{{ checksum "package.json" }}'
+            - 'v1-dependencies-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}'
+            - 'v1-dependencies-{{ checksum "package.json" }}-'
             - v1-dependencies-
       - run:
           name: Install dependencies
           command: npm install && npm install greenkeeper-lockfile@1
-      - run:
-          name: List dependencies
-          command: npm list || true
       - save_cache:
           paths:
             - node_modules
-          key: 'v1-dependencies-{{ checksum "package.json" }}'
+          key: 'v1-dependencies-{{ checksum "package.json" }}-{{ checksum "package-lock.json" }}'
       - run:
           name: Linter code
           command: npm run lint
       - run:
-          name: Save change
+          name: Update lockfiles
           command: |
-            git config user.email "tedxku2018.bot@gmail.com"
-            git config user.name "TEDxKU2018"
-            git status
-            git commit -am "Update"
+            npm run greenkeeper:update
       - run:
           name: Testing application
           command: |
-            ./node_modules/.bin/greenkeeper-lockfile-update &&
-            npm run ci:test &&
-            ./node_modules/.bin/greenkeeper-lockfile-upload
+            npm run ci:test
           environment:
             MOCHA_FILE: test/results/test-results.xml
+      - run:
+          name: Upload lockfiles
+          command: |
+              npm run greenkeeper:upload
       - run:
           name: Create report
           command: 'npm run ci:report'
