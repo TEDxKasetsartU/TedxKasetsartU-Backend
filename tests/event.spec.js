@@ -34,7 +34,7 @@ function fixture_loader(model_name) {
 }
 
 function stop_fn() {
-    for (const [key, _] of Object.entries(settings.model)) {
+    for (const [key] of Object.entries(settings.model)) {
         if (key !== "default" && key !== "mongoose" && key !== "Schema") {
             settings.model[key].clear_db();
         }
