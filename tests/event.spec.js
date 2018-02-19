@@ -10,7 +10,10 @@ function getRandomInt(min, max) {
 }
 
 function randomEvent() {
-    return settings.model.event.randomOne();
+    return settings
+        .model
+        .event
+        .randomOne();
 }
 
 process.env.PORT = getRandomInt(4002, 19999);
@@ -19,32 +22,30 @@ const settings = require("../app/settings");
 
 //Require the dev-dependencies
 const chai = require("chai");
-const {
-    expect
-} = require("chai");
+const {expect} = require("chai");
 
 chai.use(require("chai-http"));
 
 function fixture_loader(model_name) {
-    return settings.database.loader.by_name(model_name);
+    return settings
+        .database
+        .loader
+        .by_name(model_name);
 }
 
 function stop_fn() {
-    return Promise.all([
-        settings.model.event.clear_db(),
-        settings.model.speaker.clear_db(),
-        settings.model.member.clear_db(),
-        settings.model.location.clear_db(),
-        settings.model.banner.clear_db()
-    ]);
+    for (const [key, _] of Object.entries(settings.model)) {
+        if (key !== "default" && key !== "mongoose" && key !== "Schema") {
+            settings.model[key].clear_db();
+        }
+    }
 }
 
 //Our parent block
 setTimeout(function () {
     describe("Events", function () {
         before(function () {
-            console.log(Object.keys(this));
-            
+            // console.log(Object.keys(this));
             this.server = require("../server.utils")(settings);
             return fixture_loader("event");
         });
@@ -53,64 +54,109 @@ setTimeout(function () {
 
         describe("/GET event", function () {
             it("it should GET all the events", function () {
-                return chai.request(this.server).get("/api/v2/events")
+                return chai
+                    .request(this.server)
+                    .get("/api/v3/events")
                     .then(res => {
                         // console.log(res.body);
                         expect(res.body.complete).to.be.true;
-                        expect(res).to.have.status(200);
+                        expect(res)
+                            .to
+                            .have
+                            .status(200);
                     });
             });
 
             it("it shouldn't GET no-exist event", function () {
-                return chai.request(this.server).get("/api/v2/event/xxyyzz")
+                return chai
+                    .request(this.server)
+                    .get("/api/v3/event/xxyyzz")
                     .catch(err => {
                         expect(err.response.body.complete).to.be.false;
-                        expect(err.response).to.have.status(400);
+                        expect(err.response)
+                            .to
+                            .have
+                            .status(400);
                     });
             });
 
             it("it should GET list all year available", function () {
-                return chai.request(this.server).get("/api/v2/events/years")
+                return chai
+                    .request(this.server)
+                    .get("/api/v3/events/years")
                     .then(res => {
                         // console.log(res.body);
                         expect(res.body.complete).to.be.true;
-                        expect(res.body.result).to.be.an("array").that.not.empty;
-                        expect(res).to.have.status(200);
+                        expect(res.body.result)
+                            .to
+                            .be
+                            .an("array")
+                            .that
+                            .not
+                            .empty;
+                        expect(res)
+                            .to
+                            .have
+                            .status(200);
                     });
             });
 
             it("it should GET 1 exist event", function () {
-                return randomEvent()
-                    .then((event) => {
-                        return chai.request(this.server).get("/api/v2/event/" + event.id);
-                    }).then(res => {
-                        // console.log(res.body);
-                        expect(res.body.complete).to.be.true;
-                        expect(res).to.have.status(200);
-                    });
+                return randomEvent().then((event) => {
+                    return chai
+                        .request(this.server)
+                        .get("/api/v3/event/" + event.id);
+                }).then(res => {
+                    // console.log(res.body);
+                    expect(res.body.complete).to.be.true;
+                    expect(res)
+                        .to
+                        .have
+                        .status(200);
+                });
             });
         });
 
         describe("/GET year", function () {
             it("it shouldn't GET not exist year", function () {
-                return chai.request(this.server)
-                    .get("/api/v2/events/1")
+                return chai
+                    .request(this.server)
+                    .get("/api/v3/events/1")
                     .catch(err => {
                         const res = err.response;
                         expect(res.body.complete).to.be.false;
-                        expect(res.body.message).to.have.own.property("code");
-                        expect(res).to.have.status(404);
+                        expect(res.body.message)
+                            .to
+                            .have
+                            .own
+                            .property("code");
+                        expect(res)
+                            .to
+                            .have
+                            .status(404);
                     });
             });
 
             it("it should GET filter only input year", function () {
                 return randomEvent().then((event) => {
-                    return chai.request(this.server).get("/api/v2/events/" + event.year);
+                    return chai
+                        .request(this.server)
+                        .get("/api/v3/events/" + event.year);
                 }).then(res => {
                     // console.log(res.body);
                     expect(res.body.complete).to.be.true;
-                    expect(res.body.result).to.be.an("array").that.not.be.empty;
-                    expect(res).to.have.status(200);
+                    expect(res.body.result)
+                        .to
+                        .be
+                        .an("array")
+                        .that
+                        .not
+                        .be
+                        .empty;
+                    expect(res)
+                        .to
+                        .have
+                        .status(200);
                 });
             });
         });

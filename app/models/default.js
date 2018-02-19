@@ -122,6 +122,9 @@ class DefaultModel {
     create(parameters) {
         const m = new this.model(parameters);
         return new Promise((res, rej) => {
+            // console.log(this.model.modelName);
+            // console.log(m);
+            
             m.save((err, m) => {
                 if (err) return rej(err);
                 res(m);

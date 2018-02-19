@@ -8,10 +8,10 @@ const DefaultModel = require("./default");
  * |column_name    |type  |require?|
  * |---------------|------|--------|
  * |name           |string|true    |
- * |speaker_info   |string|false   |
- * |topic          |string|false   |
  * |description    |string|false   |
- * |youtube_url_id |string|false   |
+ * |topic          |string|false   |
+ * |image          |string|false   |
+ * |youtube_id     |string|false   |
  * 
  * @constant {DefaultModel} SpeakerModel
  * @memberof Models
@@ -22,16 +22,16 @@ const SpeakModel = new DefaultModel("Speaker", {
         type: String,
         required: [true, "Speaker require name"]
     },
-    speaker_info: {
+    description: {
         type: String
     },
     topic: {
         type: String,
     },
-    description: {
+    image: {
         type: String
     },
-    youtube_url_id: {
+    youtube_id: {
         type: String
     }
 }, {

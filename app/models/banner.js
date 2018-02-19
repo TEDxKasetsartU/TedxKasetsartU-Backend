@@ -1,14 +1,15 @@
 const DefaultModel = require("./default");
 
-/** 
+/**
+ * @deprecated
  * `Banner` model, create by use default model class ({@link #defaultmodel DefaultModel}).
- * 
+ *
  * 1. `Type 1` - text  banner
  * 2. `Type 2` - link  banner
  * 3. `Type 3` - image banner
- * 
+ *
  * ### Database structure
- * 
+ *
  * |column_name    |type  |require?  |
  * |---------------|------|----------|
  * |title          |string|true      |
@@ -18,11 +19,11 @@ const DefaultModel = require("./default");
  * |detail         |string|if type=2 |
  * |link           |string|if type=2 |
  * |background     |string|false     |
- * 
+ *
  * @constant {DefaultModel} BannerModel
  * @memberof Models
  * @example const banner = require('./models').banner
- * 
+ *
  */
 const BannerModel = new DefaultModel("Banner", {
     title: {
@@ -31,7 +32,9 @@ const BannerModel = new DefaultModel("Banner", {
     },
     type: {
         type: Number,
-        enum: [1, 2, 3],
+        enum: [
+            1, 2, 3
+        ],
         required: [true, "Unknown banner type"]
     },
     header: {
