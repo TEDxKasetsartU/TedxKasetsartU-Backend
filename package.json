@@ -1,6 +1,6 @@
 {
   "name": "tedxku-backend",
-  "version": "0.3.1",
+  "version": "1.0.0",
   "description": "backend api for tedxku server",
   "main": "server.js",
   "scripts": {

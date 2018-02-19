@@ -56,8 +56,8 @@ const EventModel = new DefaultModel("Event", {
     }
 }, {
     timestamps: {
-        createdAt: "created_at",
-        updateAt: "update_at"
+        createdAt: "createdAt",
+        updateAt: "updateAt"
     }
 });
 
