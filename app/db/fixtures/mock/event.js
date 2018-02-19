@@ -7,7 +7,8 @@ const query = (model, size) => {
         const models = require("../../../settings").model;
         models[model].random({}, {
             "_id": 1
-        }, {"limit": size}).then((list) => {
+        }, { "limit": size }).then((list) => {
+            if (!list) return rej(new Error("cannot random"));
             if (list.length == 1) 
                 return res({name: model, result: list[0]});
             else 
