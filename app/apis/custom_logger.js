@@ -18,6 +18,7 @@ const { combine, timestamp, label, printf } = format;
  */
 const defaultFormat = info => {
     const setting = require("../settings");
+    /* const colors = */ require("colors");
 
     const defaultTo = (prefix = "", value, postfix = "") => {
         return value == null || value !== value ? "" : prefix + value + postfix;
@@ -72,26 +73,38 @@ const defaultFormat = info => {
         };
     }
     remove_empty(result);
-    // return JSON.stringify(result, null, setting.is_deploy ? 4 : 0);
-    return JSON.stringify(result, null, 4);
+    if (setting.is_deploy == false) {
+        const jsome = require("jsome");
+        jsome.colors.attr = ["green" , "bold"];
+        jsome.colors.str = "blue";
+        result = jsome.getColoredString(result);
+    } else {
+        // result = JSON.stringify(result, null, setting.is_deploy ? 4 : 0);
+        result = JSON.stringify(result, null, 4);
+    }
+    return result;
 };
 
 const error_file = new transports.File({
     filename: "logs/error.error",
-    level: "warn"
+    level: "warn",
+    colorize: true
 });
 const log_file = new transports.File({
     filename: "logs/information.log",
-    level: "verbose"
+    level: "verbose",
+    colorize: true
 });
 const verbose_file = new transports.File({
     filename: "logs/verbose.log",
-    level: "silly"
+    level: "silly",
+    colorize: true
 });
 const exception_file = new transports.File({
-    filename: "logs/exception.error"
+    filename: "logs/exception.error",
+    colorize: true
 });
-const console = new transports.Console({ level: "silly" });
+const console = new transports.Console({ level: "silly", colorize: true });
 
 // logger object
 const logger = createLogger({
