@@ -1,20 +1,20 @@
-/** 
+/**
  * This is object of utils function for manage about route in application.
  * @namespace RouteUtils
- * 
+ *
  * @returns {Object} object of utils function.
  * @returns {Object} object.create create function, use to create new route.
  * @returns {Object} object.default default route function, use to create default route such as empty path or version path.
- * 
+ *
  * @version 0.3.0
  * @author Kamontat Chantrachirathumrong
  */
 module.exports = {
     /**
      * For create route with input configuration.
-     * 
+     *
      * @memberof RouteUtils
-     * 
+     *
      * @param {Object} expressApp express app
      * @param {string} path_prefix prefix of the path (normally should be `/api/vx/` where x is version number)
      * @param {DefaultController} controller Default controller or subclass of it
@@ -28,7 +28,7 @@ module.exports = {
      * @param {string} settings.customs.type default type, accept get, list, create, update, delete. By method will get path and http-method from those type.
      * @param {string} settings.customs.method define method name in subclass of controller. Must be defined.
      * @param {string} settings.customs.path postfix of path after getting path from type
-     * 
+     *
      * @example Route.create(app, "/api", new Controller(), {
      *      fixture: {
      *          load: true,
@@ -39,10 +39,15 @@ module.exports = {
      * @version 0.3.0
      * @author Kamontat Chantrachirathumrong
      */
-    create: async (expressApp, path_prefix = "/", controller, settings = {}) => {
-        const LoggerUtil = require("../settings").api.l.util;
+    create: async (
+        expressApp,
+        path_prefix = "/",
+        controller,
+        settings = {}
+    ) => {
+        const LoggerUtil = require("../settings").api.l.utils;
 
-        const set_allow_action = (allows) => {
+        const set_allow_action = allows => {
             let actions = {
                 get: false,
                 list: false,
@@ -57,12 +62,12 @@ module.exports = {
             return actions;
         };
 
-        const clear_data = async (flag) => {
+        const clear_data = async flag => {
             // console.log("clear data: " + flag);
             if (flag) await controller.model.clear_db();
         };
 
-        const load_data = async (flag) => {
+        const load_data = async flag => {
             // console.log("load data: " + flag);
             const loader = require("../settings").database.loader;
             if (flag) await loader.by_model(controller.model);
@@ -123,45 +128,44 @@ module.exports = {
 
         Object.keys(setting).forEach(element => {
             let s = setting[element];
-            LoggerUtil.show_api_path(s.method.toUpperCase() + "-" + element.toUpperCase(), path_prefix + s.path);
-            expressApp[s.method](s.path, function (req, res) {
+            LoggerUtil.show_api_path(
+                element.toUpperCase(),
+                s.method.toUpperCase(),
+                path_prefix + s.path
+            );
+            expressApp[s.method](s.path, function(req, res) {
                 return controller[element](req, res);
             });
         });
     },
 
-
     /**
      * For create default route.
-     * Path exist: 
+     * Path exist:
      *      / => get empty string path
      *      /version => get version path
-     * 
+     *
      * @memberof RouteUtils
      * @param {Object} expressApp express app
      * @param {Object} responseUtil response util from {@link ./app/apis/response.js}
      * @param {Object} Logger logger util from {@link ./app/apis/custom_logger.js}
-     * 
+     *
      * @example Route.default(app, require("./app/apis/response"), require("./app/apis/custom_logger"))
-     * 
+     *
      * @version 0.3.0
      * @author Kamontat Chantrachirathumrong
      */
     default: (expressApp, setting) => {
-        const Logger = setting.api.l.logger;
+        const Logger = setting.api.l;
+
         const responseUtil = setting.api.r;
-        Logger.log("info", {
-            "title": "GET-EMPTY",
-            "url": "/"
-        });
+        Logger.utils.show_api_path("EMPTY PAGE", "GET", "");
+
         expressApp.get("/", (req, res) => {
             responseUtil.set_200(res, "Empty page, learn more on document");
         });
 
-        Logger.log("info", {
-            "title": "GET-VERSION",
-            "url": "/version"
-        });
+        Logger.utils.show_api_path("VERSION", "GET", "/version");
         expressApp.get("/version", (req, res) => {
             const app_setting = require("../settings").app_setting;
             responseUtil.set_200(res, app_setting.version);
