@@ -75,7 +75,7 @@ const defaultFormat = info => {
     remove_empty(result);
     if (setting.is_deploy == false) {
         const jsome = require("jsome");
-        jsome.colors.attr = ["green" , "bold"];
+        jsome.colors.attr = ["green", "bold"];
         jsome.colors.str = "blue";
         result = jsome.getColoredString(result);
     } else {
@@ -157,7 +157,7 @@ const show_info = (title, message) => {
 module.exports = {
     log: {
         verbose: opt => {
-            _log("debug", opt);
+            require("../settings").is_deploy ? _log("debug", opt) : null;
         },
         info: opt => {
             _log("verbose", opt);

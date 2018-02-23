@@ -73,8 +73,8 @@ module.exports = {
             if (flag) await loader.by_model(controller.model);
         };
 
-        const resolve_url = (name, profix = "") => {
-            return "/" + name + profix;
+        const resolve_url = (name, postfix = "") => {
+            return "/" + name + postfix;
         };
 
         let action = set_allow_action(settings.action);

@@ -5,6 +5,7 @@ const env = process.env.NODE_ENV || "development";
 const port = process.env.PORT || 3000;
 
 const deployed = env === "production" || env === "staging" ? true : false;
+const tested = env === "test" || env === "citest" ? true : false;
 // FIXME: Fix code
 // const deployed = false;
 
@@ -54,6 +55,7 @@ module.exports = {
     app_setting: s,
     env: env,
     is_deploy: deployed,
+    is_test: tested,
     server: {
         express: express,
         expressApp: expressApp,

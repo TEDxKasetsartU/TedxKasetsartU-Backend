@@ -2,14 +2,14 @@ const errors = require("restify-error");
 const Promise = require("bluebird");
 
 /**
- * create mongo schema and model, 
+ * create mongo schema and model,
  * More {@link http://mongoosejs.com/docs/guide.html#options|mongoosejs}
  * @class
- * 
+ *
  * @param {string} database_name database name
  * @param {Object} database_columns column inside database
- * @param {Object} database_options option of Schema creator 
- * 
+ * @param {Object} database_options option of Schema creator
+ *
  * @author Kamontat Chantrachirathumrong
  * @version 0.2.0-beta.3
  */
@@ -34,7 +34,7 @@ class DefaultModel {
 
     /**
      * get model name
-     * @static 
+     * @static
      * @returns {string} database name
      */
     get name() {
@@ -76,7 +76,10 @@ class DefaultModel {
         this.env = process.env.NODE_ENV || "development";
 
         this.name = database_name;
-        this.schema = new this.mongoose.Schema(database_columns, database_options);
+        this.schema = new this.mongoose.Schema(
+            database_columns,
+            database_options
+        );
         if (this._is_testing())
             this.schema.plugin(require("mongoose-simple-random"));
 
@@ -87,12 +90,12 @@ class DefaultModel {
         }
     }
 
-    /** 
+    /**
      * check environment is testing (dev,test,citest)
      * @private
      */
     _is_testing() {
-        return (this.env == "development" || this.env == "test" || this.env == "citest");
+        return this.env != "production" && this.env != "prod";
     }
 
     /**
@@ -103,9 +106,15 @@ class DefaultModel {
      */
     _action_with_id(mongooseQuery, modelID, actionString) {
         return new Promise((res, rej) => {
-            mongooseQuery.exec()
+            mongooseQuery
+                .exec()
                 .then(result => {
-                    if (!result) rej(new errors.NotFoundError(`Cannot ${actionString} id ${modelID}, bacause it not exist.`));
+                    if (!result)
+                        rej(
+                            new errors.NotFoundError(
+                                `Cannot ${actionString} id ${modelID}, bacause it not exist.`
+                            )
+                        );
                     res(result);
                 })
                 .catch(err => {
@@ -124,7 +133,7 @@ class DefaultModel {
         return new Promise((res, rej) => {
             // console.log(this.model.modelName);
             // console.log(m);
-            
+
             m.save((err, m) => {
                 if (err) return rej(err);
                 res(m);
@@ -148,10 +157,12 @@ class DefaultModel {
         if (option.filter) filter = option.filter;
         if (option.only) only = option.only;
 
-        return this.model.find(filter, only, {
-            "limit": limit,
-            "skip": next * limit
-        }).exec();
+        return this.model
+            .find(filter, only, {
+                limit: limit,
+                skip: next * limit
+            })
+            .exec();
     }
 
     /**
@@ -166,16 +177,20 @@ class DefaultModel {
     /**
      * update model that have id same as input id
      * @param {string} id input id
-     * @param {Object} body update column 
+     * @param {Object} body update column
      * @returns {Promise<Model>} promise of new mongo model
      */
     update(id, body) {
         body["$inc"] = {
-            "__v": 1
+            __v: 1
         };
-        return this._action_with_id(this.model.findByIdAndUpdate(id, body, {
-            "new": true
-        }), id, "update");
+        return this._action_with_id(
+            this.model.findByIdAndUpdate(id, body, {
+                new: true
+            }),
+            id,
+            "update"
+        );
     }
 
     /**
@@ -184,7 +199,11 @@ class DefaultModel {
      * @returns {Promise<Null>} promise of empty
      */
     delete(id) {
-        return this._action_with_id(this.model.findByIdAndRemove(id), id, "delete");
+        return this._action_with_id(
+            this.model.findByIdAndRemove(id),
+            id,
+            "delete"
+        );
     }
 
     /**
@@ -211,39 +230,46 @@ class DefaultModel {
      * @param {Object} options resut management
      * @param {number} options.skip skip result, same as next
      * @param {number} options.limit limit the result, default is array size 1
-     * 
+     *
      * @returns {Promise<Object[]>} promise of the random object as array
      */
     random(filter = {}, fields = {}, options = {}) {
-        if (!this._is_testing()) return new Promise((res) => {
-            res();
-        });
+        if (!this._is_testing())
+            return new Promise(res => {
+                res();
+            });
 
         return new Promise((res, rej) => {
-            return this.model.findRandom(filter, fields, options, function (err, results) {
-                if (err)
-                    return rej(err);
-                if (!results) rej(new errors.NotFoundError("Cannot random, try again"));
+            return this.model.findRandom(filter, fields, options, function(
+                err,
+                results
+            ) {
+                if (err) return rej(err);
+                if (!results)
+                    rej(new errors.NotFoundError("Cannot random, try again"));
                 else res(results);
             });
         });
     }
 
     randomOne() {
-        if (!this._is_testing()) return new Promise((res) => {
-            res();
-        });
+        if (!this._is_testing())
+            return new Promise(res => {
+                res();
+            });
 
         return new Promise((res, rej) => {
             return this.model.findOneRandom((err, result) => {
-                if (err) rej(new errors.NotFoundError("Cannot random, try again"));
-                if (!result) rej(new errors.NotFoundError("Cannot random, try again"));
+                if (err)
+                    rej(new errors.NotFoundError("Cannot random, try again"));
+                if (!result)
+                    rej(new errors.NotFoundError("Cannot random, try again"));
                 else res(result);
             });
         });
     }
 
-    /** 
+    /**
      * clear all row this model (Table)
      * @returns {Promise<null>} promise of null
      */
