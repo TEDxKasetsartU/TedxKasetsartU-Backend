@@ -1,6 +1,6 @@
 const setup = require("./setup")();
 
-const settings = setup.get_setting();
+// const settings = setup.get_setting();
 const chai = setup.get_chai();
 const expect = setup.get_expect();
 
