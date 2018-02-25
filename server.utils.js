@@ -7,8 +7,14 @@ const addRouter = (app, setting) => {
     // Add more router
 };
 
-module.exports = setting => {
+module.exports = async setting => {
     if (!setting || setting == {}) setting = require("./app/settings");
+
+    const Logger = await setting.api.l;
+    Logger.log.info({
+        title: "Starting",
+        message: "Server trying to start itself"
+    });
 
     const listen_callback = () => {
         const Logger = setting.api.l;
