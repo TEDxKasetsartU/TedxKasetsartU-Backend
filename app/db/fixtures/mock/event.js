@@ -5,6 +5,7 @@ const random = (min = 1, max = 20) => {
 const query = (model, size) => {
     return new Promise((res, rej) => {
         const models = require("../../../settings").model;
+        // FIXME: cannot random in production
         models[model].random({}, {
             "_id": 1
         }, { "limit": size }).then((list) => {

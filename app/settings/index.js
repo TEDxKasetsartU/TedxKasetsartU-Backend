@@ -2,7 +2,16 @@ const path = require("path");
 const dirname = path.resolve(__dirname, "../..");
 
 const env = process.env.NODE_ENV || "development";
-const url = (env === "production") ? "https://tedxku-backend.herokuapp.com" : process.env.URL || "http://127.0.0.1";
+const port = process.env.PORT || 3000;
+
+const deployed = env === "production" || env === "staging" ? true : false;
+const tested = env === "test" || env === "citest" ? true : false;
+// FIXME: Fix code
+// const deployed = false;
+
+const url = deployed
+    ? "https://tedxku-backend.herokuapp.com"
+    : process.env.URL || `http://127.0.0.1:${port}`;
 
 const l = require(dirname + "/app/apis/custom_logger");
 const r = require(dirname + "/app/apis/response");
@@ -24,32 +33,34 @@ module.exports = {
     root: dirname,
     api: {
         l: l,
-        r: r,
+        r: r
     },
     model: m,
     database: {
         fixtures: f,
-        loader: a,
+        loader: a
     },
     controller: {
         default: d,
-        event: e,
+        event: e
     },
     route: {
         object: o
     },
     router: u,
     docs: {
-        v: v,
+        v: v
     },
     config: c,
     app_setting: s,
     env: env,
+    is_deploy: deployed,
+    is_test: tested,
     server: {
         express: express,
         expressApp: expressApp,
         url: url,
-        port: process.env.PORT || 3000,
+        port: port,
         setting: t
     }
 };
