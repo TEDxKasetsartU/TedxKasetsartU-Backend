@@ -41,10 +41,11 @@ jobs:
             npm run ci:test
           environment:
             MOCHA_FILE: test/results/test-results.xml
-      - run:
-          name: Upload lockfiles
-          command: |
-              npm run greenkeeper:upload
+# disable temporarily, during command not exist
+#     - run:
+#         name: Upload lockfiles
+#         command: |
+#              npm run greenkeeper:upload
       - run:
           name: Create report
           command: 'npm run ci:report'
