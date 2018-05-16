@@ -84,7 +84,7 @@
     "mocha-junit-reporter": "1.15.0",
     "mongoose-simple-random": "0.4.1",
     "nodemon": "1.15.0",
-    "nyc": "11.6.0"
+    "nyc": "11.8.0"
   },
   "apidoc": {
     "title": "API Documents for TEDxKasetsartU",
