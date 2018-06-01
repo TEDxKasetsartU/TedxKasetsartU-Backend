@@ -69,7 +69,7 @@
     "serialize-error": "2.1.0",
     "uuid": "3.1.0",
     "winston": "3.0.0-rc1",
-    "winston-daily-rotate-file": "1.7.2"
+    "winston-daily-rotate-file": "3.2.1"
   },
   "devDependencies": {
     "apidoc": "0.17.6",
