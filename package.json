@@ -67,7 +67,7 @@
     "pm2": "2.10.0",
     "restify-error": "1.0.0",
     "serialize-error": "2.1.0",
-    "uuid": "3.1.0",
+    "uuid": "7.0.0",
     "winston": "3.0.0-rc1",
     "winston-daily-rotate-file": "1.7.2"
   },
