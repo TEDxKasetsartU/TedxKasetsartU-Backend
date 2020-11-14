@@ -74,10 +74,10 @@
   "devDependencies": {
     "apidoc": "0.17.6",
     "chai": "4.1.2",
-    "chai-http": "3.0.0",
+    "chai-http": "4.0.0",
     "codecov": "3.0.0",
     "documentation": "5.4.0",
-    "eslint": "4.18.0",
+    "eslint": "4.18.2",
     "gh-pages": "1.1.0",
     "jsome": "^2.5.0",
     "mocha": "5.0.3",
